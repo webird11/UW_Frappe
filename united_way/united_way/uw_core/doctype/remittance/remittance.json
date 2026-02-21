@@ -1,0 +1,157 @@
+{
+  "name": "Remittance",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "naming_rule": "Expression",
+  "autoname": "format:REM-{YYYY}-{#####}",
+  "title_field": "organization_name",
+  "search_fields": "organization, organization_name, campaign, total_amount",
+  "is_submittable": 1,
+  "track_changes": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "fields": [
+    {
+      "fieldname": "organization",
+      "fieldtype": "Link",
+      "label": "Organization",
+      "options": "Organization",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "bold": 1,
+      "description": "Employer sending the remittance"
+    },
+    {
+      "fieldname": "organization_name",
+      "fieldtype": "Data",
+      "label": "Organization Name",
+      "read_only": 1,
+      "fetch_from": "organization.organization_name",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "campaign",
+      "fieldtype": "Link",
+      "label": "Campaign",
+      "options": "Campaign",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "remittance_date",
+      "fieldtype": "Date",
+      "label": "Remittance Date",
+      "reqd": 1,
+      "default": "Today",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "total_amount",
+      "fieldtype": "Currency",
+      "label": "Total Amount",
+      "reqd": 1,
+      "in_list_view": 1,
+      "bold": 1
+    },
+    {
+      "fieldname": "payment_method",
+      "fieldtype": "Select",
+      "label": "Payment Method",
+      "options": "\nCheck\nACH/Bank Transfer\nWire Transfer\nOther",
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "reference_number",
+      "fieldtype": "Data",
+      "label": "Check / Reference Number"
+    },
+    {
+      "fieldname": "section_items",
+      "fieldtype": "Section Break",
+      "label": "Remittance Items"
+    },
+    {
+      "fieldname": "items",
+      "fieldtype": "Table",
+      "label": "Items",
+      "options": "Remittance Item",
+      "reqd": 1,
+      "description": "Individual donor payments within this remittance"
+    },
+    {
+      "fieldname": "section_reconciliation",
+      "fieldtype": "Section Break",
+      "label": "Reconciliation"
+    },
+    {
+      "fieldname": "items_total",
+      "fieldtype": "Currency",
+      "label": "Items Total",
+      "read_only": 1,
+      "description": "Sum of individual line items"
+    },
+    {
+      "fieldname": "variance",
+      "fieldtype": "Currency",
+      "label": "Variance",
+      "read_only": 1,
+      "description": "Difference between total amount and items total"
+    },
+    {
+      "fieldname": "donations_created",
+      "fieldtype": "Int",
+      "label": "Donations Created",
+      "read_only": 1,
+      "description": "Number of donation records created on submit"
+    },
+    {
+      "fieldname": "section_notes",
+      "fieldtype": "Section Break",
+      "label": "Notes",
+      "collapsible": 1
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Text Editor",
+      "label": "Notes"
+    },
+    {
+      "fieldname": "amended_from",
+      "fieldtype": "Link",
+      "label": "Amended From",
+      "options": "Remittance",
+      "read_only": 1,
+      "no_copy": 1,
+      "print_hide": 1
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 1, "submit": 1, "cancel": 1, "amend": 1
+    },
+    {
+      "role": "Campaign Manager",
+      "read": 1, "write": 1, "create": 1, "submit": 1
+    },
+    {
+      "role": "UW Finance",
+      "read": 1, "write": 1, "create": 1, "submit": 1, "cancel": 1, "amend": 1
+    },
+    {
+      "role": "Agency Admin",
+      "read": 1, "write": 0, "create": 0
+    },
+    {
+      "role": "UW Executive",
+      "read": 1, "write": 0, "create": 0
+    }
+  ]
+}

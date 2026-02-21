@@ -33,6 +33,7 @@ doc_events = {
 scheduler_events = {
     "daily": [
         "united_way.tasks.daily_pledge_reminders",
+        "united_way.tasks.mark_overdue_payment_schedules",
     ],
     "weekly": [
         "united_way.tasks.weekly_campaign_summary",

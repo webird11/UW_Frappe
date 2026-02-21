@@ -79,6 +79,76 @@
       "label": "UW Settings",
       "icon": "settings",
       "color": "#1E9493"
+    },
+    {
+      "type": "DocType",
+      "link_to": "Remittance",
+      "label": "Remittances",
+      "icon": "credit-card",
+      "color": "#36CFC9"
+    },
+    {
+      "type": "DocType",
+      "link_to": "Batch Deposit",
+      "label": "Batch Deposits",
+      "icon": "layers",
+      "color": "#597EF7"
+    },
+    {
+      "type": "DocType",
+      "link_to": "Distribution Run",
+      "label": "Fund Distributions",
+      "icon": "share-2",
+      "color": "#F759AB"
+    },
+    {
+      "type": "DocType",
+      "link_to": "Campaign Drive",
+      "label": "Campaign Drives",
+      "icon": "briefcase",
+      "color": "#FFA940"
+    },
+    {
+      "type": "DocType",
+      "link_to": "Pledge Writeoff",
+      "label": "Pledge Write-offs",
+      "icon": "x-circle",
+      "color": "#FF4D4F"
+    },
+    {
+      "type": "DocType",
+      "link_to": "Donor Statement Run",
+      "label": "Donor Statements",
+      "icon": "file-text",
+      "color": "#73D13D"
+    },
+    {
+      "type": "Report",
+      "link_to": "Remittance Summary",
+      "label": "Remittance Summary",
+      "icon": "bar-chart",
+      "color": "#36CFC9"
+    },
+    {
+      "type": "Report",
+      "link_to": "Distribution Summary",
+      "label": "Distribution Summary",
+      "icon": "pie-chart",
+      "color": "#F759AB"
+    },
+    {
+      "type": "Report",
+      "link_to": "Payment Schedule Aging",
+      "label": "Payment Schedule Aging",
+      "icon": "clock",
+      "color": "#FF7A45"
+    },
+    {
+      "type": "Report",
+      "link_to": "Campaign Drive Progress",
+      "label": "Campaign Drive Progress",
+      "icon": "trending-up",
+      "color": "#FFA940"
     }
   ],
   "number_cards": [

@@ -1,0 +1,138 @@
+{
+  "name": "Distribution Run",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "naming_rule": "Expression",
+  "autoname": "format:DIST-{YYYY}-{#####}",
+  "title_field": "campaign_name",
+  "search_fields": "campaign, campaign_name, distribution_date, distribution_type",
+  "is_submittable": 1,
+  "track_changes": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "fields": [
+    {
+      "fieldname": "campaign",
+      "fieldtype": "Link",
+      "label": "Campaign",
+      "options": "Campaign",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "campaign_name",
+      "fieldtype": "Data",
+      "label": "Campaign Name",
+      "read_only": 1,
+      "fetch_from": "campaign.campaign_name",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "distribution_date",
+      "fieldtype": "Date",
+      "label": "Distribution Date",
+      "reqd": 1,
+      "default": "Today",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "period_start",
+      "fieldtype": "Date",
+      "label": "Period Start",
+      "reqd": 1
+    },
+    {
+      "fieldname": "period_end",
+      "fieldtype": "Date",
+      "label": "Period End",
+      "reqd": 1
+    },
+    {
+      "fieldname": "distribution_type",
+      "fieldtype": "Select",
+      "label": "Distribution Type",
+      "options": "Monthly\nQuarterly\nSemi-Annual\nAnnual\nFinal\nAd Hoc",
+      "default": "Monthly",
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "section_summary",
+      "fieldtype": "Section Break",
+      "label": "Distribution Summary"
+    },
+    {
+      "fieldname": "total_distribution",
+      "fieldtype": "Currency",
+      "label": "Total Distribution Amount",
+      "read_only": 1,
+      "in_list_view": 1,
+      "bold": 1
+    },
+    {
+      "fieldname": "agency_count",
+      "fieldtype": "Int",
+      "label": "Number of Agencies",
+      "read_only": 1
+    },
+    {
+      "fieldname": "section_items",
+      "fieldtype": "Section Break",
+      "label": "Agency Distributions"
+    },
+    {
+      "fieldname": "items",
+      "fieldtype": "Table",
+      "label": "Distribution Items",
+      "options": "Distribution Item",
+      "reqd": 1
+    },
+    {
+      "fieldname": "section_notes",
+      "fieldtype": "Section Break",
+      "label": "Notes",
+      "collapsible": 1
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Text Editor",
+      "label": "Notes"
+    },
+    {
+      "fieldname": "amended_from",
+      "fieldtype": "Link",
+      "label": "Amended From",
+      "options": "Distribution Run",
+      "read_only": 1,
+      "no_copy": 1,
+      "print_hide": 1
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 1, "submit": 1, "cancel": 1, "amend": 1
+    },
+    {
+      "role": "Campaign Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 0, "submit": 0, "cancel": 0
+    },
+    {
+      "role": "UW Finance",
+      "read": 1, "write": 1, "create": 1, "submit": 1, "cancel": 1, "amend": 1
+    },
+    {
+      "role": "Agency Admin",
+      "read": 1, "write": 0, "create": 0
+    },
+    {
+      "role": "UW Executive",
+      "read": 1, "write": 0, "create": 0
+    }
+  ]
+}

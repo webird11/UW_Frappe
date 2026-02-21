@@ -158,6 +158,19 @@
       "description": "Designate how this pledge should be distributed among agencies. Must total 100%."
     },
     {
+      "fieldname": "section_payment_schedule",
+      "fieldtype": "Section Break",
+      "label": "Payment Schedule",
+      "collapsible": 1
+    },
+    {
+      "fieldname": "payment_schedule",
+      "fieldtype": "Table",
+      "label": "Payment Schedule",
+      "options": "Payment Schedule Entry",
+      "description": "Expected payment dates and amounts. Auto-generated from payment frequency."
+    },
+    {
       "fieldname": "section_collection",
       "fieldtype": "Section Break",
       "label": "Collection Status"

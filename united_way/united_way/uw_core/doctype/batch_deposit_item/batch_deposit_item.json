@@ -1,0 +1,81 @@
+{
+  "name": "Batch Deposit Item",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "istable": 1,
+  "editable_grid": 1,
+  "track_changes": 0,
+  "fields": [
+    {
+      "fieldname": "donor",
+      "fieldtype": "Link",
+      "label": "Donor",
+      "options": "Contact",
+      "reqd": 1,
+      "in_list_view": 1,
+      "columns": 2
+    },
+    {
+      "fieldname": "donor_name",
+      "fieldtype": "Data",
+      "label": "Donor Name",
+      "read_only": 1,
+      "fetch_from": "donor.full_name",
+      "in_list_view": 1,
+      "columns": 2
+    },
+    {
+      "fieldname": "campaign",
+      "fieldtype": "Link",
+      "label": "Campaign",
+      "options": "Campaign",
+      "in_list_view": 1,
+      "columns": 1
+    },
+    {
+      "fieldname": "pledge",
+      "fieldtype": "Link",
+      "label": "Pledge",
+      "options": "Pledge",
+      "in_list_view": 1,
+      "columns": 1,
+      "description": "Optional - link to existing pledge"
+    },
+    {
+      "fieldname": "amount",
+      "fieldtype": "Currency",
+      "label": "Amount",
+      "reqd": 1,
+      "in_list_view": 1,
+      "bold": 1,
+      "columns": 1
+    },
+    {
+      "fieldname": "check_number",
+      "fieldtype": "Data",
+      "label": "Check Number",
+      "in_list_view": 1,
+      "columns": 1
+    },
+    {
+      "fieldname": "payment_method",
+      "fieldtype": "Select",
+      "label": "Payment Method",
+      "options": "\nCheck\nCash\nMoney Order",
+      "default": "Check",
+      "in_list_view": 1,
+      "columns": 1
+    },
+    {
+      "fieldname": "donation",
+      "fieldtype": "Link",
+      "label": "Donation",
+      "options": "Donation",
+      "read_only": 1,
+      "in_list_view": 1,
+      "columns": 1,
+      "description": "Auto-created on submit"
+    }
+  ]
+}

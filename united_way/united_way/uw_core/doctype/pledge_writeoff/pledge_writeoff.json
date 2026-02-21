@@ -1,0 +1,172 @@
+{
+  "name": "Pledge Writeoff",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "naming_rule": "Expression",
+  "autoname": "format:WO-{YYYY}-{#####}",
+  "title_field": "pledge",
+  "search_fields": "pledge, donor_name, campaign, writeoff_amount",
+  "is_submittable": 1,
+  "track_changes": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "fields": [
+    {
+      "fieldname": "pledge",
+      "fieldtype": "Link",
+      "label": "Pledge",
+      "options": "Pledge",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "pledge_amount",
+      "fieldtype": "Currency",
+      "label": "Pledge Amount",
+      "read_only": 1,
+      "fetch_from": "pledge.pledge_amount",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "total_collected",
+      "fieldtype": "Currency",
+      "label": "Total Collected",
+      "read_only": 1,
+      "fetch_from": "pledge.total_collected",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "outstanding_balance",
+      "fieldtype": "Currency",
+      "label": "Outstanding Balance",
+      "read_only": 1,
+      "fetch_from": "pledge.outstanding_balance"
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "writeoff_date",
+      "fieldtype": "Date",
+      "label": "Write-off Date",
+      "reqd": 1,
+      "default": "Today",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "writeoff_amount",
+      "fieldtype": "Currency",
+      "label": "Write-off Amount",
+      "reqd": 1,
+      "in_list_view": 1,
+      "bold": 1,
+      "description": "Amount being written off"
+    },
+    {
+      "fieldname": "reason",
+      "fieldtype": "Select",
+      "label": "Reason",
+      "options": "Donor Unable to Pay\nDonor Declined\nEmployer Termination\nDeceased\nMoved/Unable to Contact\nOther",
+      "reqd": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "approved_by",
+      "fieldtype": "Link",
+      "label": "Approved By",
+      "options": "User",
+      "read_only": 1
+    },
+    {
+      "fieldname": "section_details",
+      "fieldtype": "Section Break",
+      "label": "Details"
+    },
+    {
+      "fieldname": "donor",
+      "fieldtype": "Link",
+      "label": "Donor",
+      "options": "Contact",
+      "read_only": 1,
+      "fetch_from": "pledge.donor"
+    },
+    {
+      "fieldname": "donor_name",
+      "fieldtype": "Data",
+      "label": "Donor Name",
+      "read_only": 1,
+      "fetch_from": "pledge.donor_name"
+    },
+    {
+      "fieldname": "campaign",
+      "fieldtype": "Link",
+      "label": "Campaign",
+      "options": "Campaign",
+      "read_only": 1,
+      "fetch_from": "pledge.campaign"
+    },
+    {
+      "fieldname": "section_notes",
+      "fieldtype": "Section Break",
+      "label": "Notes",
+      "collapsible": 1
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Text Editor",
+      "label": "Notes"
+    },
+    {
+      "fieldname": "amended_from",
+      "fieldtype": "Link",
+      "label": "Amended From",
+      "options": "Pledge Writeoff",
+      "read_only": 1,
+      "no_copy": 1,
+      "print_hide": 1
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "submit": 1,
+      "cancel": 1,
+      "amend": 1
+    },
+    {
+      "role": "Campaign Manager",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "submit": 1
+    },
+    {
+      "role": "UW Finance",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "submit": 1,
+      "cancel": 1,
+      "amend": 1
+    },
+    {
+      "role": "Agency Admin",
+      "read": 1,
+      "write": 0,
+      "create": 0
+    },
+    {
+      "role": "UW Executive",
+      "read": 1,
+      "write": 0,
+      "create": 0
+    }
+  ]
+}

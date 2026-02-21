@@ -1,0 +1,77 @@
+{
+  "name": "Donor Statement Item",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "istable": 1,
+  "editable_grid": 1,
+  "track_changes": 0,
+  "fields": [
+    {
+      "fieldname": "donor",
+      "fieldtype": "Link",
+      "label": "Donor",
+      "options": "Contact",
+      "reqd": 1,
+      "in_list_view": 1,
+      "columns": 2
+    },
+    {
+      "fieldname": "donor_name",
+      "fieldtype": "Data",
+      "label": "Donor Name",
+      "read_only": 1,
+      "fetch_from": "donor.full_name",
+      "in_list_view": 1,
+      "columns": 2
+    },
+    {
+      "fieldname": "email",
+      "fieldtype": "Data",
+      "label": "Email",
+      "read_only": 1,
+      "fetch_from": "donor.email",
+      "columns": 1
+    },
+    {
+      "fieldname": "total_donations",
+      "fieldtype": "Currency",
+      "label": "Total Donations",
+      "read_only": 1,
+      "in_list_view": 1,
+      "bold": 1,
+      "columns": 1
+    },
+    {
+      "fieldname": "donation_count",
+      "fieldtype": "Int",
+      "label": "Donation Count",
+      "read_only": 1,
+      "in_list_view": 1,
+      "columns": 1
+    },
+    {
+      "fieldname": "tax_deductible_total",
+      "fieldtype": "Currency",
+      "label": "Tax Deductible Total",
+      "read_only": 1,
+      "in_list_view": 1,
+      "columns": 1
+    },
+    {
+      "fieldname": "statement_generated",
+      "fieldtype": "Check",
+      "label": "Statement Generated",
+      "default": 0,
+      "in_list_view": 1,
+      "columns": 1
+    },
+    {
+      "fieldname": "sent_date",
+      "fieldtype": "Date",
+      "label": "Sent Date",
+      "in_list_view": 1,
+      "columns": 1
+    }
+  ]
+}

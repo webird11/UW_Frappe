@@ -1,0 +1,203 @@
+{% set settings = frappe.get_single("UW Settings") %}
+{% set donor = frappe.get_doc("Contact", doc.donor) if doc.donor else None %}
+{% set tax_year = doc.donation_date.year if doc.donation_date else "" %}
+{%- set all_donations = frappe.get_all("Donation",
+    filters={"donor": doc.donor, "docstatus": 1,
+             "donation_date": ["between", [tax_year ~ "-01-01", tax_year ~ "-12-31"]]},
+    fields=["name", "donation_date", "amount", "tax_deductible_amount", "campaign", "payment_method", "reference_number"],
+    order_by="donation_date asc") if doc.donor and tax_year else [] -%}
+{% set total_amount = all_donations | sum(attribute='amount') %}
+{% set total_deductible = all_donations | sum(attribute='tax_deductible_amount') %}
+
+<style>
+    .statement-container {
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        max-width: 750px;
+        margin: 0 auto;
+        color: #333;
+        font-size: 11px;
+        line-height: 1.5;
+    }
+    .statement-header {
+        text-align: center;
+        border-bottom: 3px solid #1a3e72;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+    }
+    .statement-header h1 {
+        color: #1a3e72;
+        font-size: 22px;
+        margin: 0;
+    }
+    .statement-header h2 {
+        color: #555;
+        font-size: 14px;
+        font-weight: normal;
+        margin: 5px 0 0;
+    }
+    .statement-header .org-name {
+        font-size: 16px;
+        color: #1a3e72;
+        margin-bottom: 5px;
+    }
+    .donor-info {
+        margin: 20px 0;
+        padding: 12px 15px;
+        background: #f8f9fa;
+        border-left: 4px solid #1a3e72;
+    }
+    .donor-info p { margin: 2px 0; }
+    .donor-info .donor-name { font-size: 14px; font-weight: bold; }
+    .summary-box {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+        gap: 15px;
+    }
+    .summary-card {
+        flex: 1;
+        text-align: center;
+        padding: 12px;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+    }
+    .summary-card .value {
+        font-size: 18px;
+        font-weight: bold;
+        color: #1a3e72;
+    }
+    .summary-card .label {
+        font-size: 10px;
+        color: #666;
+        text-transform: uppercase;
+    }
+    .donations-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+    }
+    .donations-table th {
+        background: #1a3e72;
+        color: white;
+        padding: 8px 10px;
+        text-align: left;
+        font-size: 10px;
+        text-transform: uppercase;
+    }
+    .donations-table td {
+        padding: 7px 10px;
+        border-bottom: 1px solid #eee;
+    }
+    .donations-table tr:nth-child(even) { background: #f8f9fa; }
+    .donations-table .amount { text-align: right; }
+    .donations-table tfoot td {
+        font-weight: bold;
+        border-top: 2px solid #1a3e72;
+        padding-top: 10px;
+    }
+    .tax-notice {
+        margin: 25px 0 15px;
+        padding: 12px 15px;
+        background: #f0f4f8;
+        border: 1px solid #c5d3e0;
+        font-size: 10px;
+        line-height: 1.6;
+    }
+    .tax-notice strong { display: block; margin-bottom: 5px; font-size: 11px; }
+    .footer {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 15px;
+        border-top: 1px solid #ddd;
+        color: #666;
+        font-size: 10px;
+    }
+    .footer .thank-you {
+        font-size: 13px;
+        color: #1a3e72;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+</style>
+
+<div class="statement-container">
+    <div class="statement-header">
+        <div class="org-name">{{ settings.united_way_name or "United Way" }}</div>
+        <h1>Annual Giving Statement</h1>
+        <h2>Tax Year {{ tax_year }}</h2>
+    </div>
+
+    <div class="donor-info">
+        {% if donor %}
+        <p class="donor-name">{{ donor.first_name }} {{ donor.last_name }}</p>
+        {% if donor.mailing_address %}<p>{{ donor.mailing_address }}</p>{% endif %}
+        {% if donor.city or donor.state or donor.zip_code %}
+        <p>{{ donor.city or "" }}{% if donor.city and donor.state %}, {% endif %}{{ donor.state or "" }} {{ donor.zip_code or "" }}</p>
+        {% endif %}
+        {% if donor.email %}<p>{{ donor.email }}</p>{% endif %}
+        {% endif %}
+    </div>
+
+    <div class="summary-box">
+        <div class="summary-card">
+            <div class="value">{{ all_donations | length }}</div>
+            <div class="label">Donations</div>
+        </div>
+        <div class="summary-card">
+            <div class="value">{{ frappe.utils.fmt_money(total_amount, currency="USD") }}</div>
+            <div class="label">Total Giving</div>
+        </div>
+        <div class="summary-card">
+            <div class="value">{{ frappe.utils.fmt_money(total_deductible, currency="USD") }}</div>
+            <div class="label">Tax Deductible</div>
+        </div>
+    </div>
+
+    <table class="donations-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Receipt #</th>
+                <th>Campaign</th>
+                <th>Method</th>
+                <th class="amount">Amount</th>
+                <th class="amount">Tax Deductible</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in all_donations %}
+            <tr>
+                <td>{{ frappe.utils.formatdate(d.donation_date, "MM/dd/yyyy") }}</td>
+                <td>{{ d.name }}</td>
+                <td>{{ d.campaign or "" }}</td>
+                <td>{{ d.payment_method or "" }}</td>
+                <td class="amount">{{ frappe.utils.fmt_money(d.amount, currency="USD") }}</td>
+                <td class="amount">{{ frappe.utils.fmt_money(d.tax_deductible_amount, currency="USD") }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">Total for {{ tax_year }}</td>
+                <td class="amount">{{ frappe.utils.fmt_money(total_amount, currency="USD") }}</td>
+                <td class="amount">{{ frappe.utils.fmt_money(total_deductible, currency="USD") }}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="tax-notice">
+        <strong>IRS Tax Deductibility Notice</strong>
+        No goods or services were provided in exchange for these contributions.
+        {{ settings.united_way_name or "United Way" }} is a 501(c)(3) tax-exempt organization.
+        {% if settings.ein %}EIN: {{ settings.ein }}{% endif %}
+        <br><br>
+        This statement is provided for your tax records. Please retain it for your files.
+        Consult your tax advisor regarding deductibility of charitable contributions.
+    </div>
+
+    <div class="footer">
+        <div class="thank-you">Thank you for your generous support!</div>
+        <p>{{ settings.united_way_name or "United Way" }}{% if settings.address %} &bull; {{ settings.address }}{% endif %}{% if settings.phone %} &bull; {{ settings.phone }}{% endif %}</p>
+        <p>Statement generated {{ frappe.utils.formatdate(frappe.utils.nowdate(), "MMMM d, yyyy") }}</p>
+    </div>
+</div>

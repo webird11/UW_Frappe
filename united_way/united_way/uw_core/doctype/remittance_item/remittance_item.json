@@ -1,0 +1,57 @@
+{
+  "name": "Remittance Item",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "istable": 1,
+  "editable_grid": 1,
+  "track_changes": 0,
+  "fields": [
+    {
+      "fieldname": "donor",
+      "fieldtype": "Link",
+      "label": "Donor",
+      "options": "Contact",
+      "reqd": 1,
+      "in_list_view": 1,
+      "columns": 3
+    },
+    {
+      "fieldname": "donor_name",
+      "fieldtype": "Data",
+      "label": "Donor Name",
+      "read_only": 1,
+      "fetch_from": "donor.full_name",
+      "in_list_view": 1,
+      "columns": 2
+    },
+    {
+      "fieldname": "pledge",
+      "fieldtype": "Link",
+      "label": "Pledge",
+      "options": "Pledge",
+      "in_list_view": 1,
+      "columns": 2,
+      "description": "Link to donor's active pledge"
+    },
+    {
+      "fieldname": "amount",
+      "fieldtype": "Currency",
+      "label": "Amount",
+      "reqd": 1,
+      "in_list_view": 1,
+      "bold": 1,
+      "columns": 2
+    },
+    {
+      "fieldname": "donation",
+      "fieldtype": "Link",
+      "label": "Donation",
+      "options": "Donation",
+      "read_only": 1,
+      "in_list_view": 1,
+      "columns": 1,
+      "description": "Auto-created on submit"
+    }
+  ]
+}

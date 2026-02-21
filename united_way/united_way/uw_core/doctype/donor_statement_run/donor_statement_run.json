@@ -1,0 +1,116 @@
+{
+  "name": "Donor Statement Run",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "naming_rule": "Expression",
+  "autoname": "format:STMT-{YYYY}-{#####}",
+  "title_field": "tax_year",
+  "search_fields": "tax_year, generation_date",
+  "is_submittable": 1,
+  "track_changes": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "fields": [
+    {
+      "fieldname": "tax_year",
+      "fieldtype": "Int",
+      "label": "Tax Year",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "bold": 1
+    },
+    {
+      "fieldname": "generation_date",
+      "fieldtype": "Date",
+      "label": "Generation Date",
+      "reqd": 1,
+      "default": "Today",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "total_donors",
+      "fieldtype": "Int",
+      "label": "Total Donors",
+      "read_only": 1
+    },
+    {
+      "fieldname": "total_amount",
+      "fieldtype": "Currency",
+      "label": "Total Amount",
+      "read_only": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "statements_generated",
+      "fieldtype": "Int",
+      "label": "Statements Generated",
+      "read_only": 1
+    },
+    {
+      "fieldname": "statements_sent",
+      "fieldtype": "Int",
+      "label": "Statements Sent",
+      "read_only": 1
+    },
+    {
+      "fieldname": "section_items",
+      "fieldtype": "Section Break",
+      "label": "Donor Statements"
+    },
+    {
+      "fieldname": "items",
+      "fieldtype": "Table",
+      "label": "Donor Statements",
+      "options": "Donor Statement Item",
+      "reqd": 1
+    },
+    {
+      "fieldname": "section_notes",
+      "fieldtype": "Section Break",
+      "label": "Notes",
+      "collapsible": 1
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Text Editor",
+      "label": "Notes"
+    },
+    {
+      "fieldname": "amended_from",
+      "fieldtype": "Link",
+      "label": "Amended From",
+      "options": "Donor Statement Run",
+      "read_only": 1,
+      "no_copy": 1,
+      "print_hide": 1
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 1, "submit": 1, "cancel": 1, "amend": 1
+    },
+    {
+      "role": "Campaign Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 0, "submit": 1, "cancel": 0
+    },
+    {
+      "role": "UW Finance",
+      "read": 1, "write": 1, "create": 1, "submit": 1, "cancel": 1, "amend": 1
+    },
+    {
+      "role": "Agency Admin",
+      "read": 1, "write": 0, "create": 0
+    },
+    {
+      "role": "UW Executive",
+      "read": 1, "write": 0, "create": 0
+    }
+  ]
+}

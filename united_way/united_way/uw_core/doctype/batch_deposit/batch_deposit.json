@@ -1,0 +1,132 @@
+{
+  "name": "Batch Deposit",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "naming_rule": "Expression",
+  "autoname": "format:DEP-{YYYY}-{#####}",
+  "title_field": "deposit_date",
+  "search_fields": "deposit_date, total_amount, bank_reference",
+  "is_submittable": 1,
+  "track_changes": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "fields": [
+    {
+      "fieldname": "deposit_date",
+      "fieldtype": "Date",
+      "label": "Deposit Date",
+      "reqd": 1,
+      "default": "Today",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "default_campaign",
+      "fieldtype": "Link",
+      "label": "Default Campaign",
+      "options": "Campaign",
+      "in_standard_filter": 1,
+      "description": "Default campaign for items without one specified"
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "total_amount",
+      "fieldtype": "Currency",
+      "label": "Expected Deposit Total",
+      "reqd": 1,
+      "in_list_view": 1,
+      "bold": 1
+    },
+    {
+      "fieldname": "bank_reference",
+      "fieldtype": "Data",
+      "label": "Bank Deposit Reference"
+    },
+    {
+      "fieldname": "section_items",
+      "fieldtype": "Section Break",
+      "label": "Deposit Items"
+    },
+    {
+      "fieldname": "items",
+      "fieldtype": "Table",
+      "label": "Items",
+      "options": "Batch Deposit Item",
+      "reqd": 1
+    },
+    {
+      "fieldname": "section_reconciliation",
+      "fieldtype": "Section Break",
+      "label": "Reconciliation"
+    },
+    {
+      "fieldname": "items_total",
+      "fieldtype": "Currency",
+      "label": "Items Total",
+      "read_only": 1
+    },
+    {
+      "fieldname": "variance",
+      "fieldtype": "Currency",
+      "label": "Variance",
+      "read_only": 1
+    },
+    {
+      "fieldname": "item_count",
+      "fieldtype": "Int",
+      "label": "Item Count",
+      "read_only": 1
+    },
+    {
+      "fieldname": "donations_created",
+      "fieldtype": "Int",
+      "label": "Donations Created",
+      "read_only": 1
+    },
+    {
+      "fieldname": "section_notes",
+      "fieldtype": "Section Break",
+      "label": "Notes",
+      "collapsible": 1
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Text Editor",
+      "label": "Notes"
+    },
+    {
+      "fieldname": "amended_from",
+      "fieldtype": "Link",
+      "label": "Amended From",
+      "options": "Batch Deposit",
+      "read_only": 1,
+      "no_copy": 1,
+      "print_hide": 1
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 1, "submit": 1, "cancel": 1, "amend": 1
+    },
+    {
+      "role": "Campaign Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 0, "submit": 1, "cancel": 0, "amend": 0
+    },
+    {
+      "role": "UW Finance",
+      "read": 1, "write": 1, "create": 1, "delete": 0, "submit": 1, "cancel": 1, "amend": 1
+    },
+    {
+      "role": "Agency Admin",
+      "read": 1, "write": 0, "create": 0
+    },
+    {
+      "role": "UW Executive",
+      "read": 1, "write": 0, "create": 0
+    }
+  ]
+}

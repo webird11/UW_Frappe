@@ -1,0 +1,73 @@
+{
+  "name": "Distribution Item",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "istable": 1,
+  "editable_grid": 1,
+  "track_changes": 0,
+  "fields": [
+    {
+      "fieldname": "agency",
+      "fieldtype": "Link",
+      "label": "Agency",
+      "options": "Organization",
+      "reqd": 1,
+      "in_list_view": 1,
+      "columns": 3
+    },
+    {
+      "fieldname": "agency_code",
+      "fieldtype": "Data",
+      "label": "Agency Code",
+      "read_only": 1,
+      "fetch_from": "agency.agency_code",
+      "in_list_view": 1,
+      "columns": 1
+    },
+    {
+      "fieldname": "total_allocated",
+      "fieldtype": "Currency",
+      "label": "Total Allocated",
+      "read_only": 1,
+      "in_list_view": 1,
+      "columns": 1,
+      "description": "Total pledge allocations to this agency"
+    },
+    {
+      "fieldname": "total_collected",
+      "fieldtype": "Currency",
+      "label": "Collections to Date",
+      "read_only": 1,
+      "in_list_view": 1,
+      "columns": 1
+    },
+    {
+      "fieldname": "previously_distributed",
+      "fieldtype": "Currency",
+      "label": "Previously Distributed",
+      "read_only": 1,
+      "in_list_view": 1,
+      "columns": 1
+    },
+    {
+      "fieldname": "distribution_amount",
+      "fieldtype": "Currency",
+      "label": "This Distribution",
+      "reqd": 1,
+      "in_list_view": 1,
+      "bold": 1,
+      "columns": 1
+    },
+    {
+      "fieldname": "check_number",
+      "fieldtype": "Data",
+      "label": "Check / EFT Number"
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Small Text",
+      "label": "Notes"
+    }
+  ]
+}

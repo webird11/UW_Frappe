@@ -1,0 +1,29 @@
+{
+  "name": "Campaign Drive Progress",
+  "module": "UW Core",
+  "doctype": "Report",
+  "ref_doctype": "Campaign Drive",
+  "report_type": "Script Report",
+  "is_standard": "Yes",
+  "disabled": 0,
+  "filters": [
+    {
+      "fieldname": "campaign",
+      "label": "Campaign",
+      "fieldtype": "Link",
+      "options": "Campaign"
+    },
+    {
+      "fieldname": "status",
+      "label": "Status",
+      "fieldtype": "Select",
+      "options": "\nPlanning\nMaterials Sent\nActive\nCompleted\nCancelled"
+    },
+    {
+      "fieldname": "organization",
+      "label": "Organization",
+      "fieldtype": "Link",
+      "options": "Organization"
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "name": "Campaign Drive",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "naming_rule": "Expression",
+  "autoname": "format:DRV-{YYYY}-{#####}",
+  "title_field": "organization_name",
+  "search_fields": "organization, organization_name, campaign, coordinator_name, status",
+  "is_submittable": 0,
+  "track_changes": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "fields": [
+    {
+      "fieldname": "organization",
+      "fieldtype": "Link",
+      "label": "Organization",
+      "options": "Organization",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "bold": 1,
+      "description": "Employer running the workplace campaign"
+    },
+    {
+      "fieldname": "organization_name",
+      "fieldtype": "Data",
+      "label": "Organization Name",
+      "read_only": 1,
+      "fetch_from": "organization.organization_name",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "campaign",
+      "fieldtype": "Link",
+      "label": "Campaign",
+      "options": "Campaign",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "coordinator",
+      "fieldtype": "Link",
+      "label": "Coordinator",
+      "options": "Contact",
+      "description": "Workplace campaign coordinator at the employer"
+    },
+    {
+      "fieldname": "coordinator_name",
+      "fieldtype": "Data",
+      "label": "Coordinator Name",
+      "read_only": 1,
+      "fetch_from": "coordinator.full_name"
+    },
+    {
+      "fieldname": "coordinator_email",
+      "fieldtype": "Data",
+      "label": "Coordinator Email",
+      "read_only": 1,
+      "fetch_from": "coordinator.email"
+    },
+    {
+      "fieldname": "section_dates",
+      "fieldtype": "Section Break",
+      "label": "Schedule"
+    },
+    {
+      "fieldname": "drive_start_date",
+      "fieldtype": "Date",
+      "label": "Drive Start Date",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "kickoff_date",
+      "fieldtype": "Date",
+      "label": "Kickoff Event Date"
+    },
+    {
+      "fieldname": "column_break_dates",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "drive_end_date",
+      "fieldtype": "Date",
+      "label": "Drive End Date",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "wrap_up_date",
+      "fieldtype": "Date",
+      "label": "Wrap-up / Thank You Date"
+    },
+    {
+      "fieldname": "section_goals",
+      "fieldtype": "Section Break",
+      "label": "Goals & Progress"
+    },
+    {
+      "fieldname": "goal_amount",
+      "fieldtype": "Currency",
+      "label": "Goal Amount",
+      "bold": 1
+    },
+    {
+      "fieldname": "goal_participation_rate",
+      "fieldtype": "Percent",
+      "label": "Participation Rate Goal %"
+    },
+    {
+      "fieldname": "employee_count",
+      "fieldtype": "Int",
+      "label": "Total Eligible Employees"
+    },
+    {
+      "fieldname": "column_break_goals",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "total_pledged",
+      "fieldtype": "Currency",
+      "label": "Total Pledged",
+      "read_only": 1
+    },
+    {
+      "fieldname": "pledge_count",
+      "fieldtype": "Int",
+      "label": "Number of Pledges",
+      "read_only": 1
+    },
+    {
+      "fieldname": "participation_rate",
+      "fieldtype": "Percent",
+      "label": "Actual Participation %",
+      "read_only": 1
+    },
+    {
+      "fieldname": "percent_of_goal",
+      "fieldtype": "Percent",
+      "label": "% of Goal",
+      "read_only": 1
+    },
+    {
+      "fieldname": "section_status",
+      "fieldtype": "Section Break",
+      "label": "Status & Logistics"
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "label": "Status",
+      "options": "Planning\nMaterials Sent\nActive\nCompleted\nCancelled",
+      "default": "Planning",
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "materials_sent",
+      "fieldtype": "Check",
+      "label": "Materials Sent",
+      "default": 0
+    },
+    {
+      "fieldname": "materials_sent_date",
+      "fieldtype": "Date",
+      "label": "Materials Sent Date",
+      "depends_on": "eval:doc.materials_sent"
+    },
+    {
+      "fieldname": "column_break_status",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "pledge_forms_received",
+      "fieldtype": "Check",
+      "label": "Pledge Forms Received",
+      "default": 0
+    },
+    {
+      "fieldname": "forms_received_date",
+      "fieldtype": "Date",
+      "label": "Forms Received Date",
+      "depends_on": "eval:doc.pledge_forms_received"
+    },
+    {
+      "fieldname": "thank_you_sent",
+      "fieldtype": "Check",
+      "label": "Thank You Sent",
+      "default": 0
+    },
+    {
+      "fieldname": "section_notes",
+      "fieldtype": "Section Break",
+      "label": "Notes",
+      "collapsible": 1
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Text Editor",
+      "label": "Notes"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 1
+    },
+    {
+      "role": "Campaign Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 0
+    },
+    {
+      "role": "UW Finance",
+      "read": 1, "write": 1, "create": 1
+    },
+    {
+      "role": "Agency Admin",
+      "read": 1, "write": 0, "create": 0
+    },
+    {
+      "role": "UW Executive",
+      "read": 1, "write": 0, "create": 0
+    }
+  ]
+}

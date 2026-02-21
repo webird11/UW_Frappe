@@ -32,6 +32,27 @@ def daily_pledge_reminders():
     frappe.db.commit()
 
 
+def mark_overdue_payment_schedules():
+    """Mark payment schedule entries as overdue if past due date and still pending."""
+    today = nowdate()
+
+    overdue = frappe.db.sql("""
+        SELECT pse.name, pse.parent
+        FROM `tabPayment Schedule Entry` pse
+        JOIN `tabPledge` p ON pse.parent = p.name
+        WHERE pse.status = 'Pending'
+        AND pse.due_date < %s
+        AND p.docstatus = 1
+    """, today, as_dict=True)
+
+    for entry in overdue:
+        frappe.db.set_value("Payment Schedule Entry", entry.name, "status", "Overdue")
+
+    if overdue:
+        frappe.logger().info(f"Marked {len(overdue)} payment schedule entries as overdue")
+        frappe.db.commit()
+
+
 def weekly_campaign_summary():
     """Generate weekly summary of active campaign progress."""
     active_campaigns = frappe.get_all(
