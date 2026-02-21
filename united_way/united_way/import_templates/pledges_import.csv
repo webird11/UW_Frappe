@@ -1,0 +1,4 @@
+campaign,donor,pledge_date,pledge_amount,payment_method,payment_frequency,eligible_for_match,allocations.agency,allocations.designation_type,allocations.percentage
+"2025 Annual Campaign","John-Smith-0001",2025-01-15,5000,Payroll Deduction,Monthly,1,"Big Brothers Big Sisters",Donor Designated,50
+,,,,,,,"Meals on Wheels",Community Impact Fund,50
+"2025 Annual Campaign","Jane-Doe-0001",2025-02-01,1000,One-Time Gift,One-Time,0,"Big Brothers Big Sisters",Donor Designated,100

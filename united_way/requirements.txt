@@ -1,0 +1,1 @@
+# United Way app has no extra dependencies beyond Frappe

@@ -1,0 +1,9 @@
+{
+  "name": "Campaign Summary",
+  "module": "UW Core",
+  "doctype": "Report",
+  "ref_doctype": "Campaign",
+  "report_type": "Script Report",
+  "is_standard": "Yes",
+  "disabled": 0
+}

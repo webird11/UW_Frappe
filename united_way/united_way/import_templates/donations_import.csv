@@ -1,0 +1,4 @@
+donation_date,donor,campaign,pledge,amount,payment_method,reference_number,batch_number,tax_deductible,tax_deductible_amount,allocated_agency,donor_message
+2025-03-01,"John-Smith-0001","2025 Annual Campaign","PLG-2025-00001",500,Payroll Deduction,PAY-2025-001,BATCH-2025-03,1,500,,"Monthly payroll deduction"
+2025-02-15,"Jane-Doe-0001","2025 Annual Campaign","PLG-2025-00002",1000,Check,CHK-12345,BATCH-2025-02,1,1000,,"Full pledge payment"
+2025-04-01,,"2025 Annual Campaign",,250,Cash,,BATCH-2025-04,1,250,"Big Brothers Big Sisters","Walk-in donation"

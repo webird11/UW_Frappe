@@ -1,0 +1,116 @@
+{
+  "name": "UW Core",
+  "module": "UW Core",
+  "doctype": "Workspace",
+  "label": "United Way",
+  "category": "Modules",
+  "icon": "heart",
+  "is_default": 0,
+  "public": 1,
+  "title": "United Way Dashboard",
+  "content": "[{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>United Way Dashboard</b></span>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Pledge\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Donation\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Contact\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Organization\",\"col\":3}},{\"type\":\"spacer\",\"data\":{\"col\":12}},{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\"><b>Reports</b></span>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Campaign Summary Report\",\"col\":4}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Donor Giving History\",\"col\":4}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Agency Allocation Report\",\"col\":4}},{\"type\":\"spacer\",\"data\":{\"col\":12}},{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\"><b>Settings</b></span>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"UW Settings\",\"col\":4}}]",
+  "charts": [
+    {
+      "chart_name": "Monthly Donation Trend",
+      "chart_type": "Custom",
+      "source": "",
+      "label": "Monthly Donation Trend"
+    },
+    {
+      "chart_name": "Donor Level Distribution",
+      "chart_type": "Custom",
+      "source": "",
+      "label": "Donor Level Distribution"
+    }
+  ],
+  "shortcuts": [
+    {
+      "type": "DocType",
+      "link_to": "Pledge",
+      "label": "New Pledge",
+      "icon": "file",
+      "color": "#5B8FF9"
+    },
+    {
+      "type": "DocType",
+      "link_to": "Donation",
+      "label": "New Donation",
+      "icon": "dollar-sign",
+      "color": "#5AD8A6"
+    },
+    {
+      "type": "DocType",
+      "link_to": "Contact",
+      "label": "New Contact",
+      "icon": "users",
+      "color": "#6DC8EC"
+    },
+    {
+      "type": "DocType",
+      "link_to": "Organization",
+      "label": "New Organization",
+      "icon": "building",
+      "color": "#945FB9"
+    },
+    {
+      "type": "Report",
+      "link_to": "Campaign Summary",
+      "label": "Campaign Summary Report",
+      "icon": "bar-chart-2",
+      "color": "#E86452"
+    },
+    {
+      "type": "Report",
+      "link_to": "Donor Giving History",
+      "label": "Donor Giving History",
+      "icon": "trending-up",
+      "color": "#F6BD16"
+    },
+    {
+      "type": "Report",
+      "link_to": "Agency Allocation Report",
+      "label": "Agency Allocation Report",
+      "icon": "pie-chart",
+      "color": "#FF9845"
+    },
+    {
+      "type": "DocType",
+      "link_to": "UW Settings",
+      "label": "UW Settings",
+      "icon": "settings",
+      "color": "#1E9493"
+    }
+  ],
+  "number_cards": [
+    {
+      "number_card_name": "Total Pledged",
+      "label": "Total Pledged",
+      "document_type": "Pledge",
+      "function": "Sum",
+      "aggregate_function_based_on": "pledge_amount",
+      "filters_json": "{\"docstatus\":1}"
+    },
+    {
+      "number_card_name": "Total Collected",
+      "label": "Total Collected",
+      "document_type": "Donation",
+      "function": "Sum",
+      "aggregate_function_based_on": "amount",
+      "filters_json": "{\"docstatus\":1}"
+    },
+    {
+      "number_card_name": "Active Campaigns",
+      "label": "Active Campaigns",
+      "document_type": "Campaign",
+      "function": "Count",
+      "filters_json": "{\"status\":\"Active\",\"docstatus\":1}"
+    },
+    {
+      "number_card_name": "Total Donors",
+      "label": "Total Donors",
+      "document_type": "Contact",
+      "function": "Count",
+      "filters_json": "{\"contact_type\":\"Individual Donor\"}"
+    }
+  ]
+}

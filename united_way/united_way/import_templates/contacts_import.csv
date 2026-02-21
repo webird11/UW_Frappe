@@ -1,0 +1,4 @@
+first_name,last_name,organization,title,contact_type,status,email,phone,mobile,preferred_contact_method,do_not_contact,do_not_email,street_address,street_address_2,city,state,zip_code,donor_since
+John,Smith,Acme Corporation,VP of Human Resources,Corporate Contact,Active,john.smith@acme.com,555-0201,555-0202,Email,0,0,"500 Corporate Blvd","Suite 100",Springfield,IL,62702,2020-01-15
+Jane,Doe,,Director of Programs,Individual Donor,Active,jane.doe@email.com,555-0301,,Email,0,0,"123 Elm Street",,Springfield,IL,62701,2019-06-01
+Robert,Johnson,Meals on Wheels,Executive Director,Agency Staff,Active,rjohnson@mow.org,555-0102,,Phone,0,0,"200 Oak Ave",,Springfield,IL,62703,

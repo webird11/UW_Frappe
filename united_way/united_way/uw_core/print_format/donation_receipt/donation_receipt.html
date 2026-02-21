@@ -1,0 +1,231 @@
+{% set settings = frappe.get_doc("UW Settings") %}
+{% set donor = frappe.get_doc("Contact", doc.donor) if doc.donor else None %}
+
+<style>
+  .receipt-container {
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 30px;
+    color: #333;
+  }
+  .receipt-header {
+    text-align: center;
+    border-bottom: 3px solid #003366;
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+  }
+  .receipt-header h1 {
+    color: #003366;
+    font-size: 24px;
+    margin: 0 0 5px 0;
+  }
+  .receipt-header h2 {
+    color: #666;
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0;
+  }
+  .receipt-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #003366;
+    margin: 20px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .receipt-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 4px;
+  }
+  .receipt-meta div {
+    text-align: left;
+  }
+  .receipt-meta .label {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .receipt-meta .value {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 2px;
+  }
+  .donor-info {
+    margin-bottom: 25px;
+  }
+  .donor-info h3 {
+    font-size: 13px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+  }
+  .donor-info p {
+    margin: 3px 0;
+    font-size: 14px;
+  }
+  .amount-section {
+    background: #003366;
+    color: white;
+    padding: 20px;
+    border-radius: 4px;
+    margin: 25px 0;
+  }
+  .amount-section table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .amount-section td {
+    padding: 6px 0;
+    font-size: 14px;
+  }
+  .amount-section td:last-child {
+    text-align: right;
+    font-weight: bold;
+  }
+  .amount-section .total-row td {
+    font-size: 18px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.3);
+  }
+  .details-section {
+    margin: 20px 0;
+  }
+  .details-section table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .details-section td {
+    padding: 8px 12px;
+    font-size: 13px;
+    border-bottom: 1px solid #eee;
+  }
+  .details-section td:first-child {
+    color: #888;
+    width: 40%;
+  }
+  .irs-disclaimer {
+    margin-top: 30px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #666;
+    line-height: 1.6;
+  }
+  .footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #003366;
+    color: #666;
+    font-size: 13px;
+  }
+  .footer p {
+    margin: 5px 0;
+  }
+</style>
+
+<div class="receipt-container">
+  <div class="receipt-header">
+    <h1>{{ settings.united_way_name or "United Way" }}</h1>
+    <h2>{{ settings.website or "" }}</h2>
+  </div>
+
+  <div class="receipt-title">Official Donation Receipt</div>
+
+  <div class="receipt-meta">
+    <div>
+      <div class="label">Receipt Number</div>
+      <div class="value">{{ doc.name }}</div>
+    </div>
+    <div>
+      <div class="label">Donation Date</div>
+      <div class="value">{{ frappe.utils.formatdate(doc.donation_date) }}</div>
+    </div>
+    <div>
+      <div class="label">Campaign</div>
+      <div class="value">{{ doc.campaign }}</div>
+    </div>
+  </div>
+
+  <div class="donor-info">
+    <h3>Donor Information</h3>
+    {% if donor %}
+    <p><strong>{{ donor.full_name }}</strong></p>
+    {% if donor.organization %}
+    <p>{{ donor.organization }}</p>
+    {% endif %}
+    {% if donor.street_address %}
+    <p>{{ donor.street_address }}</p>
+    {% endif %}
+    {% if donor.street_address_2 %}
+    <p>{{ donor.street_address_2 }}</p>
+    {% endif %}
+    {% if donor.city or donor.state or donor.zip_code %}
+    <p>{{ donor.city or "" }}{% if donor.city and donor.state %}, {% endif %}{{ donor.state or "" }} {{ donor.zip_code or "" }}</p>
+    {% endif %}
+    {% else %}
+    <p>{{ doc.donor_name or doc.donor }}</p>
+    {% endif %}
+  </div>
+
+  <div class="amount-section">
+    <table>
+      <tr>
+        <td>Donation Amount</td>
+        <td>{{ frappe.utils.fmt_money(doc.amount, currency="USD") }}</td>
+      </tr>
+      {% if doc.tax_deductible and doc.tax_deductible_amount %}
+      <tr class="total-row">
+        <td>Tax Deductible Amount</td>
+        <td>{{ frappe.utils.fmt_money(doc.tax_deductible_amount, currency="USD") }}</td>
+      </tr>
+      {% endif %}
+    </table>
+  </div>
+
+  <div class="details-section">
+    <table>
+      {% if doc.payment_method %}
+      <tr>
+        <td>Payment Method</td>
+        <td>{{ doc.payment_method }}</td>
+      </tr>
+      {% endif %}
+      {% if doc.reference_number %}
+      <tr>
+        <td>Reference Number</td>
+        <td>{{ doc.reference_number }}</td>
+      </tr>
+      {% endif %}
+      {% if doc.pledge %}
+      <tr>
+        <td>Pledge Reference</td>
+        <td>{{ doc.pledge }}</td>
+      </tr>
+      {% endif %}
+    </table>
+  </div>
+
+  <div class="irs-disclaimer">
+    <strong>Tax Deductibility Notice:</strong> No goods or services were provided in exchange for this
+    contribution. {{ settings.united_way_name or "United Way" }} is a 501(c)(3) tax-exempt organization.
+    Please retain this receipt for your tax records.
+  </div>
+
+  <div class="footer">
+    <p><strong>Thank you for your generous contribution!</strong></p>
+    <p>Your support makes a difference in our community.</p>
+    <p>{{ settings.united_way_name or "United Way" }}{% if settings.website %} | {{ settings.website }}{% endif %}</p>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+{
+  "name": "Agency Allocation Report",
+  "module": "UW Core",
+  "doctype": "Report",
+  "ref_doctype": "Pledge",
+  "report_type": "Script Report",
+  "is_standard": "Yes",
+  "disabled": 0,
+  "filters": [
+    {
+      "fieldname": "agency",
+      "label": "Agency",
+      "fieldtype": "Link",
+      "options": "Organization",
+      "get_query": {
+        "filters": {"organization_type": "Member Agency"}
+      }
+    },
+    {
+      "fieldname": "campaign",
+      "label": "Campaign",
+      "fieldtype": "Link",
+      "options": "Campaign"
+    },
+    {
+      "fieldname": "campaign_year",
+      "label": "Campaign Year",
+      "fieldtype": "Int"
+    },
+    {
+      "fieldname": "designation_type",
+      "label": "Designation Type",
+      "fieldtype": "Select",
+      "options": "\nDonor Designated\nCommunity Impact Fund\nSpecific Program\nUndesignated\nCorporate"
+    }
+  ]
+}

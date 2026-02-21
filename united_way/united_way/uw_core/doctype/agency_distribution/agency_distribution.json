@@ -1,0 +1,51 @@
+{
+  "name": "Agency Distribution",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "istable": 1,
+  "editable_grid": 1,
+  "track_changes": 0,
+  "fields": [
+    {
+      "fieldname": "agency",
+      "fieldtype": "Link",
+      "label": "Agency",
+      "options": "Organization",
+      "reqd": 1,
+      "in_list_view": 1,
+      "columns": 3
+    },
+    {
+      "fieldname": "target_amount",
+      "fieldtype": "Currency",
+      "label": "Target Amount",
+      "in_list_view": 1,
+      "columns": 2
+    },
+    {
+      "fieldname": "actual_allocated",
+      "fieldtype": "Currency",
+      "label": "Actual Allocated",
+      "read_only": 1,
+      "in_list_view": 1,
+      "columns": 2
+    },
+    {
+      "fieldname": "actual_collected",
+      "fieldtype": "Currency",
+      "label": "Actual Collected",
+      "read_only": 1,
+      "in_list_view": 1,
+      "columns": 2
+    },
+    {
+      "fieldname": "variance",
+      "fieldtype": "Currency",
+      "label": "Variance",
+      "read_only": 1,
+      "in_list_view": 1,
+      "columns": 1
+    }
+  ]
+}

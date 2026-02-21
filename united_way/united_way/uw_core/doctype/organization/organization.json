@@ -1,0 +1,259 @@
+{
+  "name": "Organization",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "naming_rule": "By fieldname",
+  "autoname": "field:organization_name",
+  "title_field": "organization_name",
+  "image_field": "logo",
+  "search_fields": "organization_name, organization_type, city, state",
+  "is_submittable": 0,
+  "allow_rename": 1,
+  "track_changes": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "fields": [
+    {
+      "fieldname": "organization_name",
+      "fieldtype": "Data",
+      "label": "Organization Name",
+      "reqd": 1,
+      "unique": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "bold": 1
+    },
+    {
+      "fieldname": "organization_type",
+      "fieldtype": "Select",
+      "label": "Organization Type",
+      "options": "\nMember Agency\nCorporate Donor\nCommunity Partner\nGovernment\nFoundation\nUnited Way\nOther",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "label": "Status",
+      "options": "Active\nInactive\nProspect\nFormer",
+      "default": "Active",
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "logo",
+      "fieldtype": "Attach Image",
+      "label": "Logo"
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "ein",
+      "fieldtype": "Data",
+      "label": "EIN / Tax ID",
+      "description": "Employer Identification Number"
+    },
+    {
+      "fieldname": "website",
+      "fieldtype": "Data",
+      "label": "Website",
+      "options": "URL"
+    },
+    {
+      "fieldname": "phone",
+      "fieldtype": "Phone",
+      "label": "Phone"
+    },
+    {
+      "fieldname": "email",
+      "fieldtype": "Data",
+      "label": "Email",
+      "options": "Email"
+    },
+    {
+      "fieldname": "section_address",
+      "fieldtype": "Section Break",
+      "label": "Address"
+    },
+    {
+      "fieldname": "street_address",
+      "fieldtype": "Data",
+      "label": "Street Address"
+    },
+    {
+      "fieldname": "street_address_2",
+      "fieldtype": "Data",
+      "label": "Street Address 2"
+    },
+    {
+      "fieldname": "city",
+      "fieldtype": "Data",
+      "label": "City",
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "column_break_address",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "state",
+      "fieldtype": "Data",
+      "label": "State",
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "zip_code",
+      "fieldtype": "Data",
+      "label": "ZIP Code"
+    },
+    {
+      "fieldname": "county",
+      "fieldtype": "Data",
+      "label": "County"
+    },
+    {
+      "fieldname": "section_agency_details",
+      "fieldtype": "Section Break",
+      "label": "Agency Details",
+      "depends_on": "eval:doc.organization_type=='Member Agency'"
+    },
+    {
+      "fieldname": "agency_code",
+      "fieldtype": "Data",
+      "label": "Agency Code",
+      "unique": 1,
+      "description": "Unique code used for pledge allocations"
+    },
+    {
+      "fieldname": "service_area",
+      "fieldtype": "Small Text",
+      "label": "Service Area Description"
+    },
+    {
+      "fieldname": "focus_areas",
+      "fieldtype": "MultiSelect",
+      "label": "Focus Areas",
+      "options": "Education\nIncome/Financial Stability\nHealth\nBasic Needs\nYouth Development\nSenior Services\nDisaster Relief\nOther"
+    },
+    {
+      "fieldname": "column_break_agency",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "date_joined",
+      "fieldtype": "Date",
+      "label": "Date Joined Network"
+    },
+    {
+      "fieldname": "annual_allocation_cap",
+      "fieldtype": "Currency",
+      "label": "Annual Allocation Cap",
+      "description": "Maximum annual allocation this agency can receive"
+    },
+    {
+      "fieldname": "certification_status",
+      "fieldtype": "Select",
+      "label": "Certification Status",
+      "options": "\nCertified\nPending Review\nConditional\nDecertified"
+    },
+    {
+      "fieldname": "section_corporate",
+      "fieldtype": "Section Break",
+      "label": "Corporate Donor Details",
+      "depends_on": "eval:doc.organization_type=='Corporate Donor'"
+    },
+    {
+      "fieldname": "industry",
+      "fieldtype": "Data",
+      "label": "Industry"
+    },
+    {
+      "fieldname": "employee_count",
+      "fieldtype": "Int",
+      "label": "Employee Count"
+    },
+    {
+      "fieldname": "workplace_campaign",
+      "fieldtype": "Check",
+      "label": "Has Workplace Campaign",
+      "default": 0
+    },
+    {
+      "fieldname": "column_break_corporate",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "corporate_match",
+      "fieldtype": "Check",
+      "label": "Corporate Match Program",
+      "default": 0
+    },
+    {
+      "fieldname": "match_ratio",
+      "fieldtype": "Float",
+      "label": "Match Ratio",
+      "description": "e.g., 1.0 = dollar for dollar",
+      "depends_on": "eval:doc.corporate_match"
+    },
+    {
+      "fieldname": "match_cap",
+      "fieldtype": "Currency",
+      "label": "Annual Match Cap",
+      "depends_on": "eval:doc.corporate_match"
+    },
+    {
+      "fieldname": "section_contacts",
+      "fieldtype": "Section Break",
+      "label": "Key Contacts"
+    },
+    {
+      "fieldname": "primary_contact",
+      "fieldtype": "Link",
+      "label": "Primary Contact",
+      "options": "Contact"
+    },
+    {
+      "fieldname": "campaign_coordinator",
+      "fieldtype": "Link",
+      "label": "Campaign Coordinator",
+      "options": "Contact"
+    },
+    {
+      "fieldname": "section_notes",
+      "fieldtype": "Section Break",
+      "label": "Notes",
+      "collapsible": 1
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Text Editor",
+      "label": "Notes"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 1, "submit": 0, "cancel": 0, "amend": 0
+    },
+    {
+      "role": "Campaign Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 0
+    },
+    {
+      "role": "Agency Admin",
+      "read": 1, "write": 0, "create": 0, "delete": 0
+    },
+    {
+      "role": "UW Finance",
+      "read": 1, "write": 1, "create": 0, "delete": 0
+    },
+    {
+      "role": "UW Executive",
+      "read": 1, "write": 0, "create": 0, "delete": 0
+    }
+  ]
+}

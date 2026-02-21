@@ -1,0 +1,186 @@
+{
+  "name": "Campaign",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "naming_rule": "Expression",
+  "autoname": "format:CAMP-{YYYY}-{####}",
+  "title_field": "campaign_name",
+  "search_fields": "campaign_name, campaign_year, campaign_type",
+  "is_submittable": 1,
+  "track_changes": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "fields": [
+    {
+      "fieldname": "campaign_name",
+      "fieldtype": "Data",
+      "label": "Campaign Name",
+      "reqd": 1,
+      "in_list_view": 1,
+      "bold": 1
+    },
+    {
+      "fieldname": "campaign_type",
+      "fieldtype": "Select",
+      "label": "Campaign Type",
+      "options": "Annual Campaign\nWorkplace Campaign\nSpecial Initiative\nEmergency/Disaster\nDay of Caring\nOther",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "campaign_year",
+      "fieldtype": "Int",
+      "label": "Campaign Year",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "label": "Status",
+      "options": "Planning\nActive\nClosed\nReconciled\nArchived",
+      "default": "Planning",
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "start_date",
+      "fieldtype": "Date",
+      "label": "Start Date",
+      "reqd": 1
+    },
+    {
+      "fieldname": "end_date",
+      "fieldtype": "Date",
+      "label": "End Date",
+      "reqd": 1
+    },
+    {
+      "fieldname": "organization",
+      "fieldtype": "Link",
+      "label": "Sponsoring Organization",
+      "options": "Organization",
+      "description": "Corporate sponsor for workplace campaigns"
+    },
+    {
+      "fieldname": "campaign_manager",
+      "fieldtype": "Link",
+      "label": "Campaign Manager",
+      "options": "Contact"
+    },
+    {
+      "fieldname": "section_goals",
+      "fieldtype": "Section Break",
+      "label": "Goals & Progress"
+    },
+    {
+      "fieldname": "fundraising_goal",
+      "fieldtype": "Currency",
+      "label": "Fundraising Goal",
+      "reqd": 1,
+      "bold": 1
+    },
+    {
+      "fieldname": "total_pledged",
+      "fieldtype": "Currency",
+      "label": "Total Pledged",
+      "read_only": 1,
+      "bold": 1,
+      "description": "Auto-calculated from submitted pledges"
+    },
+    {
+      "fieldname": "total_collected",
+      "fieldtype": "Currency",
+      "label": "Total Collected",
+      "read_only": 1,
+      "description": "Auto-calculated from submitted donations"
+    },
+    {
+      "fieldname": "column_break_goals",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "percent_of_goal",
+      "fieldtype": "Percent",
+      "label": "% of Goal",
+      "read_only": 1
+    },
+    {
+      "fieldname": "donor_count",
+      "fieldtype": "Int",
+      "label": "Number of Donors",
+      "read_only": 1
+    },
+    {
+      "fieldname": "pledge_count",
+      "fieldtype": "Int",
+      "label": "Number of Pledges",
+      "read_only": 1
+    },
+    {
+      "fieldname": "collection_rate",
+      "fieldtype": "Percent",
+      "label": "Collection Rate",
+      "read_only": 1,
+      "description": "Collected / Pledged"
+    },
+    {
+      "fieldname": "section_agency_goals",
+      "fieldtype": "Section Break",
+      "label": "Agency Allocation Targets",
+      "collapsible": 1
+    },
+    {
+      "fieldname": "agency_goals",
+      "fieldtype": "Table",
+      "label": "Agency Goals",
+      "options": "Agency Distribution",
+      "description": "Target allocations per member agency for this campaign"
+    },
+    {
+      "fieldname": "section_description",
+      "fieldtype": "Section Break",
+      "label": "Description",
+      "collapsible": 1
+    },
+    {
+      "fieldname": "description",
+      "fieldtype": "Text Editor",
+      "label": "Campaign Description"
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Text Editor",
+      "label": "Internal Notes"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 1, "submit": 1, "cancel": 1
+    },
+    {
+      "role": "Campaign Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 0, "submit": 1, "cancel": 0
+    },
+    {
+      "role": "Agency Admin",
+      "read": 1, "write": 0, "create": 0
+    },
+    {
+      "role": "UW Finance",
+      "read": 1, "write": 1, "create": 0, "submit": 0
+    },
+    {
+      "role": "UW Executive",
+      "read": 1, "write": 0, "create": 0
+    }
+  ]
+}

@@ -1,0 +1,235 @@
+{
+  "name": "Contact",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "naming_rule": "Expression",
+  "autoname": "format:{first_name}-{last_name}-{####}",
+  "title_field": "full_name",
+  "image_field": "photo",
+  "search_fields": "first_name, last_name, email, organization",
+  "is_submittable": 0,
+  "allow_rename": 1,
+  "track_changes": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "fields": [
+    {
+      "fieldname": "first_name",
+      "fieldtype": "Data",
+      "label": "First Name",
+      "reqd": 1,
+      "bold": 1
+    },
+    {
+      "fieldname": "last_name",
+      "fieldtype": "Data",
+      "label": "Last Name",
+      "reqd": 1,
+      "bold": 1
+    },
+    {
+      "fieldname": "full_name",
+      "fieldtype": "Data",
+      "label": "Full Name",
+      "read_only": 1,
+      "in_list_view": 1,
+      "bold": 1
+    },
+    {
+      "fieldname": "photo",
+      "fieldtype": "Attach Image",
+      "label": "Photo"
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "organization",
+      "fieldtype": "Link",
+      "label": "Organization",
+      "options": "Organization",
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "title",
+      "fieldtype": "Data",
+      "label": "Job Title"
+    },
+    {
+      "fieldname": "contact_type",
+      "fieldtype": "Select",
+      "label": "Contact Type",
+      "options": "Individual Donor\nCorporate Contact\nAgency Staff\nVolunteer\nBoard Member\nCampaign Coordinator\nOther",
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "label": "Status",
+      "options": "Active\nInactive\nDeceased",
+      "default": "Active",
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "section_contact_info",
+      "fieldtype": "Section Break",
+      "label": "Contact Information"
+    },
+    {
+      "fieldname": "email",
+      "fieldtype": "Data",
+      "label": "Email",
+      "options": "Email",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "phone",
+      "fieldtype": "Phone",
+      "label": "Phone"
+    },
+    {
+      "fieldname": "mobile",
+      "fieldtype": "Phone",
+      "label": "Mobile"
+    },
+    {
+      "fieldname": "column_break_contact",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "preferred_contact_method",
+      "fieldtype": "Select",
+      "label": "Preferred Contact Method",
+      "options": "\nEmail\nPhone\nMail"
+    },
+    {
+      "fieldname": "do_not_contact",
+      "fieldtype": "Check",
+      "label": "Do Not Contact",
+      "default": 0
+    },
+    {
+      "fieldname": "do_not_email",
+      "fieldtype": "Check",
+      "label": "Do Not Email",
+      "default": 0
+    },
+    {
+      "fieldname": "section_address",
+      "fieldtype": "Section Break",
+      "label": "Address"
+    },
+    {
+      "fieldname": "street_address",
+      "fieldtype": "Data",
+      "label": "Street Address"
+    },
+    {
+      "fieldname": "street_address_2",
+      "fieldtype": "Data",
+      "label": "Street Address 2"
+    },
+    {
+      "fieldname": "city",
+      "fieldtype": "Data",
+      "label": "City"
+    },
+    {
+      "fieldname": "column_break_address",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "state",
+      "fieldtype": "Data",
+      "label": "State"
+    },
+    {
+      "fieldname": "zip_code",
+      "fieldtype": "Data",
+      "label": "ZIP Code"
+    },
+    {
+      "fieldname": "section_donor_info",
+      "fieldtype": "Section Break",
+      "label": "Donor Information",
+      "depends_on": "eval:['Individual Donor','Corporate Contact'].includes(doc.contact_type)"
+    },
+    {
+      "fieldname": "donor_since",
+      "fieldtype": "Date",
+      "label": "Donor Since"
+    },
+    {
+      "fieldname": "lifetime_giving",
+      "fieldtype": "Currency",
+      "label": "Lifetime Giving",
+      "read_only": 1,
+      "description": "Auto-calculated from donation records"
+    },
+    {
+      "fieldname": "donor_level",
+      "fieldtype": "Select",
+      "label": "Donor Level",
+      "options": "\nTocqueville Society ($10,000+)\nLeadership Circle ($1,000-$9,999)\nCommunity Builder ($500-$999)\nPartner ($100-$499)\nSupporter (Under $100)"
+    },
+    {
+      "fieldname": "column_break_donor",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "last_donation_date",
+      "fieldtype": "Date",
+      "label": "Last Donation Date",
+      "read_only": 1
+    },
+    {
+      "fieldname": "last_donation_amount",
+      "fieldtype": "Currency",
+      "label": "Last Donation Amount",
+      "read_only": 1
+    },
+    {
+      "fieldname": "consecutive_years_giving",
+      "fieldtype": "Int",
+      "label": "Consecutive Years Giving",
+      "read_only": 1
+    },
+    {
+      "fieldname": "section_notes",
+      "fieldtype": "Section Break",
+      "label": "Notes",
+      "collapsible": 1
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Text Editor",
+      "label": "Notes"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 1
+    },
+    {
+      "role": "Campaign Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 0
+    },
+    {
+      "role": "Agency Admin",
+      "read": 1, "write": 0, "create": 0
+    },
+    {
+      "role": "UW Finance",
+      "read": 1, "write": 1, "create": 1, "delete": 0
+    },
+    {
+      "role": "UW Executive",
+      "read": 1, "write": 0, "create": 0
+    }
+  ]
+}

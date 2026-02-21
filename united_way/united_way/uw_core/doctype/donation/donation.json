@@ -1,0 +1,182 @@
+{
+  "name": "Donation",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "naming_rule": "Expression",
+  "autoname": "format:DON-{YYYY}-{#####}",
+  "title_field": "donor_name",
+  "search_fields": "donor, donor_name, campaign, amount",
+  "is_submittable": 1,
+  "track_changes": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "fields": [
+    {
+      "fieldname": "donation_date",
+      "fieldtype": "Date",
+      "label": "Donation Date",
+      "reqd": 1,
+      "default": "Today",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "donor",
+      "fieldtype": "Link",
+      "label": "Donor",
+      "options": "Contact",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "donor_name",
+      "fieldtype": "Data",
+      "label": "Donor Name",
+      "read_only": 1,
+      "fetch_from": "donor.full_name",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "campaign",
+      "fieldtype": "Link",
+      "label": "Campaign",
+      "options": "Campaign",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "pledge",
+      "fieldtype": "Link",
+      "label": "Pledge",
+      "options": "Pledge",
+      "description": "Link to the pledge this donation fulfills",
+      "in_standard_filter": 1,
+      "get_query": "united_way.uw_core.doctype.donation.donation.get_pledge_query"
+    },
+    {
+      "fieldname": "amount",
+      "fieldtype": "Currency",
+      "label": "Amount",
+      "reqd": 1,
+      "in_list_view": 1,
+      "bold": 1
+    },
+    {
+      "fieldname": "payment_method",
+      "fieldtype": "Select",
+      "label": "Payment Method",
+      "options": "\nPayroll Deduction\nCredit Card\nCheck\nACH/Bank Transfer\nCash\nStock/Securities\nWire Transfer\nOnline\nOther",
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "section_details",
+      "fieldtype": "Section Break",
+      "label": "Payment Details"
+    },
+    {
+      "fieldname": "reference_number",
+      "fieldtype": "Data",
+      "label": "Reference / Check Number"
+    },
+    {
+      "fieldname": "batch_number",
+      "fieldtype": "Data",
+      "label": "Batch Number",
+      "description": "For grouping donations processed together"
+    },
+    {
+      "fieldname": "receipt_sent",
+      "fieldtype": "Check",
+      "label": "Receipt Sent",
+      "default": 0
+    },
+    {
+      "fieldname": "column_break_details",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "receipt_date",
+      "fieldtype": "Date",
+      "label": "Receipt Date",
+      "depends_on": "eval:doc.receipt_sent"
+    },
+    {
+      "fieldname": "tax_deductible",
+      "fieldtype": "Check",
+      "label": "Tax Deductible",
+      "default": 1
+    },
+    {
+      "fieldname": "tax_deductible_amount",
+      "fieldtype": "Currency",
+      "label": "Tax Deductible Amount",
+      "depends_on": "eval:doc.tax_deductible"
+    },
+    {
+      "fieldname": "section_allocation",
+      "fieldtype": "Section Break",
+      "label": "Agency Allocation",
+      "description": "If linked to a pledge, allocations follow the pledge. Otherwise specify directly."
+    },
+    {
+      "fieldname": "allocated_agency",
+      "fieldtype": "Link",
+      "label": "Allocated Agency",
+      "options": "Organization",
+      "description": "For direct (non-pledge) donations, specify the receiving agency"
+    },
+    {
+      "fieldname": "section_notes",
+      "fieldtype": "Section Break",
+      "label": "Notes",
+      "collapsible": 1
+    },
+    {
+      "fieldname": "donor_message",
+      "fieldtype": "Small Text",
+      "label": "Donor Message"
+    },
+    {
+      "fieldname": "internal_notes",
+      "fieldtype": "Text Editor",
+      "label": "Internal Notes"
+    },
+    {
+      "fieldname": "amended_from",
+      "fieldtype": "Link",
+      "label": "Amended From",
+      "options": "Donation",
+      "read_only": 1,
+      "no_copy": 1,
+      "print_hide": 1
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 1, "submit": 1, "cancel": 1, "amend": 1
+    },
+    {
+      "role": "Campaign Manager",
+      "read": 1, "write": 1, "create": 1, "submit": 1
+    },
+    {
+      "role": "UW Finance",
+      "read": 1, "write": 1, "create": 1, "submit": 1, "cancel": 1, "amend": 1
+    },
+    {
+      "role": "Agency Admin",
+      "read": 1, "write": 0, "create": 0
+    },
+    {
+      "role": "UW Executive",
+      "read": 1, "write": 0, "create": 0
+    }
+  ]
+}

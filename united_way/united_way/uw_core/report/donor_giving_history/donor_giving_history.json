@@ -1,0 +1,39 @@
+{
+  "name": "Donor Giving History",
+  "module": "UW Core",
+  "doctype": "Report",
+  "ref_doctype": "Pledge",
+  "report_type": "Script Report",
+  "is_standard": "Yes",
+  "disabled": 0,
+  "filters": [
+    {
+      "fieldname": "campaign",
+      "label": "Campaign",
+      "fieldtype": "Link",
+      "options": "Campaign"
+    },
+    {
+      "fieldname": "from_date",
+      "label": "From Date",
+      "fieldtype": "Date"
+    },
+    {
+      "fieldname": "to_date",
+      "label": "To Date",
+      "fieldtype": "Date"
+    },
+    {
+      "fieldname": "organization",
+      "label": "Organization",
+      "fieldtype": "Link",
+      "options": "Organization"
+    },
+    {
+      "fieldname": "donor_level",
+      "label": "Donor Level",
+      "fieldtype": "Select",
+      "options": "\nTocqueville Society ($10,000+)\nLeadership Circle ($1,000-$9,999)\nCommunity Builder ($500-$999)\nPartner ($100-$499)\nSupporter (Under $100)"
+    }
+  ]
+}

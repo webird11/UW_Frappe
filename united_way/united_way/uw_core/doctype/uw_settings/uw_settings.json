@@ -1,0 +1,120 @@
+{
+  "name": "UW Settings",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "issingle": 1,
+  "track_changes": 1,
+  "fields": [
+    {
+      "fieldname": "section_general",
+      "fieldtype": "Section Break",
+      "label": "General Settings"
+    },
+    {
+      "fieldname": "united_way_name",
+      "fieldtype": "Data",
+      "label": "United Way Name",
+      "reqd": 1,
+      "default": "United Way"
+    },
+    {
+      "fieldname": "fiscal_year_start_month",
+      "fieldtype": "Select",
+      "label": "Fiscal Year Start Month",
+      "options": "January\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember",
+      "default": "January"
+    },
+    {
+      "fieldname": "default_currency",
+      "fieldtype": "Data",
+      "label": "Default Currency",
+      "default": "USD"
+    },
+    {
+      "fieldname": "column_break_general",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "logo",
+      "fieldtype": "Attach Image",
+      "label": "Organization Logo"
+    },
+    {
+      "fieldname": "website",
+      "fieldtype": "Data",
+      "label": "Website",
+      "options": "URL"
+    },
+    {
+      "fieldname": "section_pledge",
+      "fieldtype": "Section Break",
+      "label": "Pledge Settings"
+    },
+    {
+      "fieldname": "default_community_impact_pct",
+      "fieldtype": "Percent",
+      "label": "Default Community Impact Fund %",
+      "description": "Default percentage allocated to Community Impact Fund for undesignated pledges",
+      "default": 0
+    },
+    {
+      "fieldname": "allow_partial_allocations",
+      "fieldtype": "Check",
+      "label": "Allow Partial Allocations",
+      "description": "Allow pledge allocations that don't total 100% (remainder goes to Community Impact Fund)",
+      "default": 0
+    },
+    {
+      "fieldname": "column_break_pledge",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "pledge_reminder_days",
+      "fieldtype": "Int",
+      "label": "Pledge Reminder Days",
+      "description": "Send reminder when pledge is this many days past due",
+      "default": 30
+    },
+    {
+      "fieldname": "auto_writeoff_days",
+      "fieldtype": "Int",
+      "label": "Auto Write-off Days",
+      "description": "Automatically write off pledges after this many days (0 = never)",
+      "default": 0
+    },
+    {
+      "fieldname": "section_notifications",
+      "fieldtype": "Section Break",
+      "label": "Notification Settings"
+    },
+    {
+      "fieldname": "send_pledge_confirmations",
+      "fieldtype": "Check",
+      "label": "Send Pledge Confirmation Emails",
+      "default": 1
+    },
+    {
+      "fieldname": "send_donation_receipts",
+      "fieldtype": "Check",
+      "label": "Send Donation Receipt Emails",
+      "default": 1
+    },
+    {
+      "fieldname": "finance_notification_email",
+      "fieldtype": "Data",
+      "label": "Finance Notification Email",
+      "options": "Email"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1, "write": 1, "create": 1
+    },
+    {
+      "role": "UW Executive",
+      "read": 1, "write": 1
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "name": "Pledge Allocation",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "istable": 1,
+  "editable_grid": 1,
+  "track_changes": 0,
+  "fields": [
+    {
+      "fieldname": "agency",
+      "fieldtype": "Link",
+      "label": "Agency",
+      "options": "Organization",
+      "reqd": 1,
+      "in_list_view": 1,
+      "bold": 1,
+      "columns": 3,
+      "get_query": "united_way.uw_core.doctype.pledge_allocation.pledge_allocation.get_agency_query"
+    },
+    {
+      "fieldname": "agency_code",
+      "fieldtype": "Data",
+      "label": "Agency Code",
+      "read_only": 1,
+      "fetch_from": "agency.agency_code",
+      "in_list_view": 1,
+      "columns": 1
+    },
+    {
+      "fieldname": "designation_type",
+      "fieldtype": "Select",
+      "label": "Designation Type",
+      "options": "Donor Designated\nCommunity Impact Fund\nSpecific Program\nUndesignated",
+      "default": "Donor Designated",
+      "in_list_view": 1,
+      "columns": 2
+    },
+    {
+      "fieldname": "percentage",
+      "fieldtype": "Percent",
+      "label": "Percentage",
+      "reqd": 1,
+      "in_list_view": 1,
+      "columns": 1
+    },
+    {
+      "fieldname": "allocated_amount",
+      "fieldtype": "Currency",
+      "label": "Allocated Amount",
+      "read_only": 1,
+      "in_list_view": 1,
+      "bold": 1,
+      "columns": 2
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Small Text",
+      "label": "Notes"
+    }
+  ]
+}
