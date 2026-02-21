@@ -208,6 +208,14 @@
       "fieldname": "notes",
       "fieldtype": "Text Editor",
       "label": "Notes"
+    },
+    {
+      "fieldname": "google_contacts",
+      "fieldtype": "Data",
+      "label": "Google Contacts",
+      "hidden": 1,
+      "read_only": 1,
+      "no_copy": 1
     }
   ],
   "permissions": [

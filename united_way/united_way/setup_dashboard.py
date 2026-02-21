@@ -72,8 +72,7 @@ def create_number_cards():
             "show_percentage_stats": card_data.get("show_percentage_stats", 0),
             "stats_time_interval": card_data.get("stats_time_interval", "Daily"),
             "color": card_data.get("color"),
-            "is_standard": 1,
-            "module": "UW Core",
+            "is_standard": 0,
         })
         doc.insert(ignore_permissions=True)
         print(f"  Created Number Card: {card_data['name']}")
@@ -136,8 +135,7 @@ def create_dashboard_charts():
             "filters_json": chart_data.get("filters_json", "{}"),
             "type": chart_data.get("type", "Line"),
             "color": chart_data.get("color"),
-            "is_standard": 1,
-            "module": "UW Core",
+            "is_standard": 0,
             "timeseries": chart_data.get("timeseries", 0),
         }
 

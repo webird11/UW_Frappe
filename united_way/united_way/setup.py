@@ -68,6 +68,29 @@ def create_pledge_workflow():
         print("  Pledge Approval workflow already exists, skipping")
         return
 
+    # Create Workflow States first (they're Link targets)
+    for state_name, style in [
+        ("Draft", "Danger"),
+        ("Pending Review", "Warning"),
+        ("Approved", "Primary"),
+        ("Rejected", "Danger"),
+        ("Cancelled", "Danger"),
+    ]:
+        if not frappe.db.exists("Workflow State", state_name):
+            frappe.get_doc({
+                "doctype": "Workflow State",
+                "workflow_state_name": state_name,
+                "style": style,
+            }).insert(ignore_permissions=True)
+
+    # Create Workflow Actions
+    for action_name in ["Submit for Review", "Approve", "Reject", "Revise", "Cancel"]:
+        if not frappe.db.exists("Workflow Action Master", action_name):
+            frappe.get_doc({
+                "doctype": "Workflow Action Master",
+                "workflow_action_name": action_name,
+            }).insert(ignore_permissions=True)
+
     workflow = frappe.get_doc({
         "doctype": "Workflow",
         "workflow_name": "Pledge Approval",
