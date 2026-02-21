@@ -1,0 +1,139 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<div class="donor-portal">
+
+  {% if no_contact %}
+  <div class="alert alert-warning" style="margin-top: 20px;">
+    <strong>No donor profile found.</strong> Your email address is not linked to a donor record.
+    Please contact your United Way representative for assistance.
+  </div>
+  {% else %}
+
+  <div style="margin-bottom: 30px;">
+    <h3 style="color: #003366; margin-bottom: 5px;">Welcome, {{ donor.full_name }}</h3>
+    {% if donor.organization %}
+    <p style="color: #666;">{{ donor.organization }}</p>
+    {% endif %}
+    {% if donor.donor_level %}
+    <span class="badge" style="background: #003366; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px;">
+      {{ donor.donor_level }}
+    </span>
+    {% endif %}
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="row" style="margin-bottom: 30px;">
+    <div class="col-md-3 col-sm-6" style="margin-bottom: 15px;">
+      <div style="background: #f8f9fa; border-left: 4px solid #5B8FF9; padding: 15px; border-radius: 4px;">
+        <div style="font-size: 12px; color: #888; text-transform: uppercase;">Total Pledged</div>
+        <div style="font-size: 24px; font-weight: bold; color: #333;">{{ frappe.utils.fmt_money(total_pledged, currency="USD") }}</div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6" style="margin-bottom: 15px;">
+      <div style="background: #f8f9fa; border-left: 4px solid #5AD8A6; padding: 15px; border-radius: 4px;">
+        <div style="font-size: 12px; color: #888; text-transform: uppercase;">Total Donated</div>
+        <div style="font-size: 24px; font-weight: bold; color: #333;">{{ frappe.utils.fmt_money(total_donated, currency="USD") }}</div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6" style="margin-bottom: 15px;">
+      <div style="background: #f8f9fa; border-left: 4px solid #F6BD16; padding: 15px; border-radius: 4px;">
+        <div style="font-size: 12px; color: #888; text-transform: uppercase;">Outstanding</div>
+        <div style="font-size: 24px; font-weight: bold; color: #333;">{{ frappe.utils.fmt_money(total_outstanding, currency="USD") }}</div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6" style="margin-bottom: 15px;">
+      <div style="background: #f8f9fa; border-left: 4px solid #6DC8EC; padding: 15px; border-radius: 4px;">
+        <div style="font-size: 12px; color: #888; text-transform: uppercase;">Lifetime Giving</div>
+        <div style="font-size: 24px; font-weight: bold; color: #333;">{{ frappe.utils.fmt_money(donor.lifetime_giving or 0, currency="USD") }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pledges Table -->
+  <h4 style="color: #003366; border-bottom: 2px solid #003366; padding-bottom: 8px; margin-top: 30px;">
+    My Pledges ({{ pledge_count }})
+  </h4>
+
+  {% if pledges %}
+  <div class="table-responsive">
+    <table class="table table-hover" style="font-size: 13px;">
+      <thead style="background: #f8f9fa;">
+        <tr>
+          <th>Pledge</th>
+          <th>Campaign</th>
+          <th>Date</th>
+          <th style="text-align: right;">Amount</th>
+          <th style="text-align: right;">Collected</th>
+          <th style="text-align: right;">Outstanding</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in pledges %}
+        <tr>
+          <td>{{ p.name }}</td>
+          <td>{{ p.campaign }}</td>
+          <td>{{ frappe.utils.formatdate(p.pledge_date) }}</td>
+          <td style="text-align: right;">{{ frappe.utils.fmt_money(p.pledge_amount, currency="USD") }}</td>
+          <td style="text-align: right;">{{ frappe.utils.fmt_money(p.total_collected, currency="USD") }}</td>
+          <td style="text-align: right;">{{ frappe.utils.fmt_money(p.outstanding_balance, currency="USD") }}</td>
+          <td>
+            {% if p.collection_status == "Fully Collected" %}
+            <span class="badge" style="background: #5AD8A6; color: white;">{{ p.collection_status }}</span>
+            {% elif p.collection_status == "In Progress" %}
+            <span class="badge" style="background: #F6BD16; color: white;">{{ p.collection_status }}</span>
+            {% else %}
+            <span class="badge" style="background: #ddd; color: #333;">{{ p.collection_status }}</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p style="color: #888; padding: 20px 0;">No pledges found.</p>
+  {% endif %}
+
+  <!-- Donations Table -->
+  <h4 style="color: #003366; border-bottom: 2px solid #003366; padding-bottom: 8px; margin-top: 30px;">
+    My Donations ({{ donations|length }})
+  </h4>
+
+  {% if donations %}
+  <div class="table-responsive">
+    <table class="table table-hover" style="font-size: 13px;">
+      <thead style="background: #f8f9fa;">
+        <tr>
+          <th>Receipt #</th>
+          <th>Date</th>
+          <th>Campaign</th>
+          <th style="text-align: right;">Amount</th>
+          <th style="text-align: right;">Tax Deductible</th>
+          <th>Payment Method</th>
+          <th>Pledge</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in donations %}
+        <tr>
+          <td>{{ d.name }}</td>
+          <td>{{ frappe.utils.formatdate(d.donation_date) }}</td>
+          <td>{{ d.campaign }}</td>
+          <td style="text-align: right;">{{ frappe.utils.fmt_money(d.amount, currency="USD") }}</td>
+          <td style="text-align: right;">{{ frappe.utils.fmt_money(d.tax_deductible_amount or 0, currency="USD") }}</td>
+          <td>{{ d.payment_method or "—" }}</td>
+          <td>{{ d.pledge or "—" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p style="color: #888; padding: 20px 0;">No donations found.</p>
+  {% endif %}
+
+  {% endif %}
+</div>
+{% endblock %}

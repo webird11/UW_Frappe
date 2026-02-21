@@ -1,0 +1,115 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<div style="max-width: 900px; margin: 0 auto;">
+  <h3 style="color: #003366; margin-bottom: 20px;">Bulk Pledge Entry</h3>
+  <p style="color: #666; margin-bottom: 20px;">
+    Upload a CSV of pledges for a single campaign. All pledges will be created and submitted automatically.
+  </p>
+
+  <!-- Campaign Selection -->
+  <div class="form-group" style="margin-bottom: 20px;">
+    <label style="font-weight: bold;">Campaign</label>
+    <select id="campaign-select" class="form-control">
+      <option value="">Select a campaign...</option>
+      {% for c in campaigns %}
+      <option value="{{ c.name }}">{{ c.campaign_name }} ({{ c.campaign_year }})</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- CSV Format Help -->
+  <div class="alert alert-info" style="font-size: 13px;">
+    <strong>CSV Format:</strong> <code>donor, pledge_amount, payment_method, payment_frequency, agency, designation_type, percentage</code><br>
+    <strong>Example:</strong>
+    <pre style="margin: 8px 0 0 0; font-size: 12px; background: #fff; padding: 8px;">donor,pledge_amount,payment_method,payment_frequency,agency,designation_type,percentage
+John-Smith-0001,5000,Payroll Deduction,Monthly,Big Brothers Big Sisters,Donor Designated,60
+,,,,Meals on Wheels,Community Impact Fund,40
+Jane-Doe-0001,1000,Check,One-Time,Big Brothers Big Sisters,Donor Designated,100</pre>
+    <small>For multi-agency pledges, repeat on the next line with only agency/designation/percentage filled in.</small>
+  </div>
+
+  <!-- CSV Input -->
+  <div class="form-group" style="margin-bottom: 15px;">
+    <label style="font-weight: bold;">Upload CSV File</label>
+    <input type="file" id="csv-file" class="form-control" accept=".csv" />
+  </div>
+
+  <div class="form-group" style="margin-bottom: 15px;">
+    <label style="font-weight: bold;">Or Paste CSV Data</label>
+    <textarea id="csv-text" class="form-control" rows="10" placeholder="Paste CSV content here..."></textarea>
+  </div>
+
+  <button id="process-btn" class="btn btn-primary btn-lg" onclick="processBulkPledges()">
+    Process Pledges
+  </button>
+
+  <!-- Results -->
+  <div id="results" style="margin-top: 20px; display: none;">
+    <h4>Results</h4>
+    <div id="results-content"></div>
+  </div>
+</div>
+
+<script>
+function processBulkPledges() {
+  var campaign = document.getElementById('campaign-select').value;
+  if (!campaign) {
+    frappe.msgprint('Please select a campaign.');
+    return;
+  }
+
+  var csvData = document.getElementById('csv-text').value;
+  var fileInput = document.getElementById('csv-file');
+
+  if (fileInput.files.length > 0) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      submitPledges(campaign, e.target.result);
+    };
+    reader.readAsText(fileInput.files[0]);
+  } else if (csvData.trim()) {
+    submitPledges(campaign, csvData);
+  } else {
+    frappe.msgprint('Please upload a CSV file or paste CSV data.');
+  }
+}
+
+function submitPledges(campaign, csvData) {
+  var btn = document.getElementById('process-btn');
+  btn.disabled = true;
+  btn.innerText = 'Processing...';
+
+  frappe.call({
+    method: 'united_way.bulk_pledge.process_bulk_pledges',
+    args: { campaign: campaign, csv_data: csvData },
+    callback: function(r) {
+      btn.disabled = false;
+      btn.innerText = 'Process Pledges';
+
+      var resultsDiv = document.getElementById('results');
+      var content = document.getElementById('results-content');
+      resultsDiv.style.display = 'block';
+
+      var html = '<div class="alert alert-' + (r.message.errors.length ? 'warning' : 'success') + '">';
+      html += '<strong>' + r.message.created + ' of ' + r.message.total + ' pledges created successfully.</strong>';
+      html += '</div>';
+
+      if (r.message.errors.length) {
+        html += '<div class="alert alert-danger"><strong>Errors:</strong><ul>';
+        r.message.errors.forEach(function(err) {
+          html += '<li>' + err + '</li>';
+        });
+        html += '</ul></div>';
+      }
+
+      content.innerHTML = html;
+    },
+    error: function(err) {
+      btn.disabled = false;
+      btn.innerText = 'Process Pledges';
+    }
+  });
+}
+</script>
+{% endblock %}
