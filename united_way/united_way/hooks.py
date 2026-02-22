@@ -98,3 +98,20 @@ fixtures = [
 # --------------------------------------------------------------------------
 app_include_css = "/assets/united_way/css/united_way.css"
 app_include_js = "/assets/united_way/js/united_way.js"
+
+# Permission Query Conditions — filter list views for Agency Admins
+# These add WHERE clauses so Agency Admins only see data for their agency.
+# --------------------------------------------------------------------------
+permission_query_conditions = {
+	"Pledge Allocation": "united_way.permissions.get_pledge_allocation_permission_query",
+	"Distribution Item": "united_way.permissions.get_distribution_item_permission_query",
+	"Distribution Run": "united_way.permissions.get_distribution_run_permission_query",
+}
+
+# Has Permission — per-document permission checks for Agency Admins
+# --------------------------------------------------------------------------
+has_permission = {
+	"Pledge Allocation": "united_way.permissions.has_pledge_allocation_permission",
+	"Distribution Item": "united_way.permissions.has_distribution_item_permission",
+	"Distribution Run": "united_way.permissions.has_distribution_run_permission",
+}

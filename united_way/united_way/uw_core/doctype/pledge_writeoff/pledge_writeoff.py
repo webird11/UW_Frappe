@@ -51,6 +51,13 @@ class PledgeWriteoff(Document):
                     entry.status = "Written Off"
                     entry.db_update()
 
+        # Create journal entry if enabled
+        try:
+            from united_way.accounting import create_writeoff_journal_entry
+            create_writeoff_journal_entry(self)
+        except Exception:
+            pass  # Don't block writeoff if JE creation fails
+
     def on_cancel(self):
         """On cancellation: reload pledge and recalculate collection fields."""
         pledge = frappe.get_doc("Pledge", self.pledge)

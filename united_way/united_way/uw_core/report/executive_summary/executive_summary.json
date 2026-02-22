@@ -1,0 +1,17 @@
+{
+  "name": "Executive Summary",
+  "doctype": "Report",
+  "ref_doctype": "Campaign",
+  "report_type": "Script Report",
+  "module": "UW Core",
+  "is_standard": "Yes",
+  "filters": [
+    {
+      "fieldname": "campaign",
+      "label": "Campaign",
+      "fieldtype": "Link",
+      "options": "Campaign",
+      "reqd": 1
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "UW Journal Entry",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "autoname": "format:JE-{YYYY}-{#####}",
+  "is_submittable": 0,
+  "fields": [
+    {"fieldname": "posting_date", "fieldtype": "Date", "label": "Posting Date", "reqd": 1, "default": "Today"},
+    {"fieldname": "entry_type", "fieldtype": "Select", "label": "Entry Type", "options": "Donation Receipt\nAgency Distribution\nPledge Writeoff\nRefund\nAdjustment", "reqd": 1},
+    {"fieldname": "column_break_1", "fieldtype": "Column Break"},
+    {"fieldname": "reference_doctype", "fieldtype": "Data", "label": "Reference DocType"},
+    {"fieldname": "reference_name", "fieldtype": "Dynamic Link", "label": "Reference Document", "options": "reference_doctype"},
+    {"fieldname": "section_break_1", "fieldtype": "Section Break", "label": "Entry Details"},
+    {"fieldname": "debit_account", "fieldtype": "Data", "label": "Debit Account", "reqd": 1},
+    {"fieldname": "credit_account", "fieldtype": "Data", "label": "Credit Account", "reqd": 1},
+    {"fieldname": "amount", "fieldtype": "Currency", "label": "Amount", "reqd": 1, "bold": 1},
+    {"fieldname": "column_break_2", "fieldtype": "Column Break"},
+    {"fieldname": "campaign", "fieldtype": "Link", "label": "Campaign", "options": "Campaign"},
+    {"fieldname": "agency", "fieldtype": "Link", "label": "Agency", "options": "Organization"},
+    {"fieldname": "donor", "fieldtype": "Link", "label": "Donor", "options": "Contact"},
+    {"fieldname": "section_break_2", "fieldtype": "Section Break", "label": "Notes"},
+    {"fieldname": "remarks", "fieldtype": "Small Text", "label": "Remarks"}
+  ],
+  "permissions": [
+    {"role": "UW Finance", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "UW Executive", "read": 1},
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1}
+  ]
+}

@@ -1,0 +1,159 @@
+version: "3.8"
+
+# United Way Frappe Production Deployment
+# Usage: docker compose -f docker-production.yml up -d
+
+x-common-env: &common-env
+  FRAPPE_SITE_NAME_HEADER: uw.localhost
+  DB_HOST: mariadb
+  DB_PORT: "3306"
+  REDIS_CACHE: redis-cache:6379
+  REDIS_QUEUE: redis-queue:6379
+  SOCKETIO_PORT: "9000"
+
+services:
+  # --- Backend (Frappe/Gunicorn) ---
+  backend:
+    image: frappe/bench:latest
+    restart: unless-stopped
+    environment:
+      <<: *common-env
+    volumes:
+      - sites:/home/frappe/frappe-bench/sites
+      - logs:/home/frappe/frappe-bench/logs
+    depends_on:
+      - mariadb
+      - redis-cache
+      - redis-queue
+
+  # --- Frontend (Nginx) ---
+  frontend:
+    image: frappe/bench:latest
+    restart: unless-stopped
+    command: nginx-entrypoint.sh
+    environment:
+      BACKEND: backend:8000
+      SOCKETIO: websocket:9000
+      FRAPPE_SITE_NAME_HEADER: uw.localhost
+    ports:
+      - "80:8080"
+      - "443:8443"
+    volumes:
+      - sites:/home/frappe/frappe-bench/sites
+    depends_on:
+      - backend
+      - websocket
+
+  # --- WebSocket (for real-time updates) ---
+  websocket:
+    image: frappe/bench:latest
+    restart: unless-stopped
+    command: node /home/frappe/frappe-bench/apps/frappe/socketio.js
+    environment:
+      <<: *common-env
+    volumes:
+      - sites:/home/frappe/frappe-bench/sites
+    depends_on:
+      - redis-cache
+      - redis-queue
+
+  # --- Background Workers ---
+  worker-short:
+    image: frappe/bench:latest
+    restart: unless-stopped
+    command: bench worker --queue short
+    environment:
+      <<: *common-env
+    volumes:
+      - sites:/home/frappe/frappe-bench/sites
+      - logs:/home/frappe/frappe-bench/logs
+    depends_on:
+      - backend
+
+  worker-long:
+    image: frappe/bench:latest
+    restart: unless-stopped
+    command: bench worker --queue long
+    environment:
+      <<: *common-env
+    volumes:
+      - sites:/home/frappe/frappe-bench/sites
+      - logs:/home/frappe/frappe-bench/logs
+    depends_on:
+      - backend
+
+  worker-default:
+    image: frappe/bench:latest
+    restart: unless-stopped
+    command: bench worker --queue default
+    environment:
+      <<: *common-env
+    volumes:
+      - sites:/home/frappe/frappe-bench/sites
+      - logs:/home/frappe/frappe-bench/logs
+    depends_on:
+      - backend
+
+  # --- Scheduler ---
+  scheduler:
+    image: frappe/bench:latest
+    restart: unless-stopped
+    command: bench schedule
+    environment:
+      <<: *common-env
+    volumes:
+      - sites:/home/frappe/frappe-bench/sites
+      - logs:/home/frappe/frappe-bench/logs
+    depends_on:
+      - backend
+
+  # --- MariaDB ---
+  mariadb:
+    image: mariadb:10.11
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+      - --skip-innodb-read-only-compressed
+      - --innodb-buffer-pool-size=512M
+      - --max-connections=200
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+      MYSQL_DATABASE: _uw_localhost
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    secrets:
+      - db_root_password
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # --- Redis Cache ---
+  redis-cache:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis-cache-data:/data
+
+  # --- Redis Queue ---
+  redis-queue:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-queue-data:/data
+
+volumes:
+  sites:
+  logs:
+  mariadb-data:
+  redis-cache-data:
+  redis-queue-data:
+
+secrets:
+  db_root_password:
+    file: ./secrets/db_root_password.txt

@@ -34,8 +34,13 @@ class DistributionRun(Document):
         self.agency_count = len(self.items)
 
     def on_submit(self):
-        """Record the distribution decision. Actual payment processing is external."""
+        """Record the distribution decision and create journal entries if enabled."""
         self.db_update()
+        try:
+            from united_way.accounting import create_distribution_journal_entries
+            create_distribution_journal_entries(self)
+        except Exception:
+            pass  # Don't block distribution if JE creation fails
 
     def on_cancel(self):
         """Cancel the distribution run."""

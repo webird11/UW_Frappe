@@ -105,6 +105,18 @@
       "fieldtype": "Data",
       "label": "Finance Notification Email",
       "options": "Email"
+    },
+    {
+      "fieldname": "section_accounting",
+      "fieldtype": "Section Break",
+      "label": "Accounting Integration"
+    },
+    {
+      "fieldname": "auto_create_journal_entries",
+      "fieldtype": "Check",
+      "label": "Auto-Create Journal Entries",
+      "description": "Automatically create UW Journal Entry records when Donations are submitted, Distributions are run, or Pledges are written off",
+      "default": 0
     }
   ],
   "permissions": [

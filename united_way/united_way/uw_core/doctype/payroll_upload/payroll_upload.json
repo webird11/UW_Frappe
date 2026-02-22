@@ -1,0 +1,158 @@
+{
+  "name": "Payroll Upload",
+  "module": "UW Core",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "naming_rule": "Expression",
+  "autoname": "format:PU-{YYYY}-{#####}",
+  "title_field": "organization",
+  "search_fields": "organization, campaign, status",
+  "is_submittable": 0,
+  "track_changes": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "fields": [
+    {
+      "fieldname": "organization",
+      "fieldtype": "Link",
+      "label": "Organization",
+      "options": "Organization",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "bold": 1,
+      "description": "Employer sending the payroll deduction file"
+    },
+    {
+      "fieldname": "campaign",
+      "fieldtype": "Link",
+      "label": "Campaign",
+      "options": "Campaign",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "fieldname": "remittance_date",
+      "fieldtype": "Date",
+      "label": "Remittance Date",
+      "reqd": 1,
+      "default": "Today",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "file_format",
+      "fieldtype": "Select",
+      "label": "File Format",
+      "options": "CSV\nADP Fixed Width\nTab Delimited",
+      "default": "CSV",
+      "reqd": 1
+    },
+    {
+      "fieldname": "payroll_file",
+      "fieldtype": "Attach",
+      "label": "Payroll File",
+      "reqd": 1,
+      "description": "Upload the payroll deduction file from the employer"
+    },
+    {
+      "fieldname": "reference_number",
+      "fieldtype": "Data",
+      "label": "Check / Reference Number",
+      "description": "Check or ACH reference number for this remittance"
+    },
+    {
+      "fieldname": "expected_total",
+      "fieldtype": "Currency",
+      "label": "Expected Total",
+      "description": "Expected total amount from the employer (for variance checking)"
+    },
+    {
+      "fieldname": "section_status",
+      "fieldtype": "Section Break",
+      "label": "Processing Status"
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "label": "Status",
+      "options": "Draft\nParsed\nMatched\nRemittance Created",
+      "default": "Draft",
+      "read_only": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "bold": 1
+    },
+    {
+      "fieldname": "remittance",
+      "fieldtype": "Link",
+      "label": "Remittance",
+      "options": "Remittance",
+      "read_only": 1,
+      "description": "The Remittance record created from this upload"
+    },
+    {
+      "fieldname": "section_logs",
+      "fieldtype": "Section Break",
+      "label": "Processing Logs",
+      "collapsible": 1
+    },
+    {
+      "fieldname": "parse_log",
+      "fieldtype": "Text",
+      "label": "Parse Log",
+      "read_only": 1,
+      "description": "Results from parsing the uploaded file"
+    },
+    {
+      "fieldname": "column_break_logs",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "match_log",
+      "fieldtype": "Text",
+      "label": "Match Log",
+      "read_only": 1,
+      "description": "Results from matching employees to donor records"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1
+    },
+    {
+      "role": "Campaign Manager",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1
+    },
+    {
+      "role": "UW Finance",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1
+    },
+    {
+      "role": "Agency Admin",
+      "read": 1,
+      "write": 0,
+      "create": 0
+    },
+    {
+      "role": "UW Executive",
+      "read": 1,
+      "write": 0,
+      "create": 0
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "Donor Retention",
+  "module": "UW Core",
+  "doctype": "Report",
+  "ref_doctype": "Donation",
+  "report_type": "Script Report",
+  "is_standard": "Yes",
+  "disabled": 0,
+  "filters": [
+    {
+      "fieldname": "current_year",
+      "label": "Current Year",
+      "fieldtype": "Int",
+      "default": 2025,
+      "reqd": 1
+    },
+    {
+      "fieldname": "campaign",
+      "label": "Campaign",
+      "fieldtype": "Link",
+      "options": "Campaign"
+    }
+  ]
+}

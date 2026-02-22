@@ -52,6 +52,7 @@ class Donation(Document):
         self.update_pledge()
         self.update_campaign()
         self.update_donor_stats()
+        self.create_journal_entry()
 
     def on_cancel(self):
         """Reverse updates on cancellation."""
@@ -81,6 +82,14 @@ class Donation(Document):
                 contact.update_donor_stats()
             except Exception:
                 pass  # Don't block donation processing if stats update fails
+
+    def create_journal_entry(self):
+        """Create an accounting journal entry if enabled in UW Settings."""
+        try:
+            from united_way.accounting import create_donation_journal_entry
+            create_donation_journal_entry(self)
+        except Exception:
+            pass  # Don't block donation processing if JE creation fails
 
 
 # Hook functions referenced in hooks.py

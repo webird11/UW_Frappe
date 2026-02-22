@@ -89,8 +89,34 @@ class Pledge(Document):
         self.update_campaign_totals()
 
     def on_cancel(self):
-        """After pledge is cancelled, update campaign totals."""
+        """After pledge is cancelled, update campaign totals.
+        If this is being cancelled as part of an amendment, also warn
+        about any donation linkages that need to be re-linked."""
         self.update_campaign_totals()
+
+        # If being amended, check for linked donations and warn
+        if self.amended_from or frappe.flags.in_amend:
+            linked_donations = frappe.get_all("Donation",
+                filters={"pledge": self.name, "docstatus": 1},
+                fields=["name", "amount"])
+            if linked_donations:
+                frappe.msgprint(
+                    f"Note: {len(linked_donations)} donation(s) are linked to the original pledge. "
+                    f"These will need to be manually re-linked to the amended pledge.",
+                    indicator="orange",
+                    title="Donations Linked to Original Pledge"
+                )
+
+    def before_insert(self):
+        """When creating an amended pledge, inform the user about the amendment context."""
+        if self.amended_from:
+            original = frappe.get_doc("Pledge", self.amended_from)
+            frappe.msgprint(
+                f"This pledge was amended from {self.amended_from}. "
+                f"Original pledge amount was {frappe.format_value(original.pledge_amount, {'fieldtype': 'Currency'})}.",
+                indicator="blue",
+                title="Pledge Amendment"
+            )
 
     def update_campaign_totals(self):
         """Trigger campaign recalculation."""

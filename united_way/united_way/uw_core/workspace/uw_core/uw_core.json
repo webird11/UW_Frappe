@@ -149,6 +149,34 @@
       "label": "Campaign Drive Progress",
       "icon": "trending-up",
       "color": "#FFA940"
+    },
+    {
+      "type": "Report",
+      "link_to": "Donor Retention",
+      "label": "Donor Retention",
+      "icon": "repeat",
+      "color": "#722ED1"
+    },
+    {
+      "type": "Report",
+      "link_to": "Executive Summary",
+      "label": "Executive Summary",
+      "icon": "award",
+      "color": "#13C2C2"
+    },
+    {
+      "type": "DocType",
+      "link_to": "Payroll Upload",
+      "label": "Payroll Upload",
+      "icon": "upload",
+      "color": "#EB2F96"
+    },
+    {
+      "type": "DocType",
+      "link_to": "UW Journal Entry",
+      "label": "Journal Entries",
+      "icon": "book",
+      "color": "#8C8C8C"
     }
   ],
   "number_cards": [

@@ -8,6 +8,7 @@
   "title_field": "donor_name",
   "search_fields": "donor, donor_name, campaign, pledge_amount",
   "is_submittable": 1,
+  "allow_amend": 1,
   "track_changes": 1,
   "sort_field": "modified",
   "sort_order": "DESC",
